@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** Initial repository documentation, ignore rules, and a secrets-safe environment template; local Git repository initialized on `main` with the GitHub `origin` configured.
-- **Pushed:** Not yet; initial commit `638c755` exists locally and the log checkpoint will be committed before the first push.
+- **Pushed:** `main` is published to the private GitHub repository and tracks `origin/main`; the initial project and repository checkpoint commits are present remotely.
 - **VM:** Nothing deployed or running yet.
-- **Next:** Commit this log checkpoint, then push `main` to GitHub.
+- **Next:** Phase 1, Step 2 — add the current official Paperless-ngx Docker Compose setup with PostgreSQL, Redis, Gotenberg, and Tika.
 
 ## History
+
+### 2026-07-18 — Phase 1, Step 1: first GitHub push completed
+
+- Pushed local `main` to `https://github.com/RaZa-97/Vaultly-DMS.git` and configured it to track `origin/main`.
+- Confirmed GitHub accepted commits `638c755` and `683d438`.
+- Reason: establish GitHub as the transfer point between Windows development and the Ubuntu VM deployment.
 
 ### 2026-07-18 — Phase 1, Step 1: initial commit created
 
