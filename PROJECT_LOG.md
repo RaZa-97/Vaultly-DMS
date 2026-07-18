@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** Initial repository foundation plus a version-pinned Paperless-ngx Docker Compose stack using PostgreSQL, Redis, Gotenberg, and Tika; `.env.example` contains deployment placeholders only.
-- **Pushed:** Step 2 commit `cad0281` is on `origin/main` with the Compose stack, expanded environment template, and service documentation.
+- **Built:** Initial repository foundation plus a version-pinned Paperless-ngx Docker Compose stack using PostgreSQL, Redis, Gotenberg, and Tika; Step 3 non-secret settings are selected for admin `Rasanga926`, timezone `Asia/Colombo`, and English/Sinhala/Tamil/Simplified Chinese OCR.
+- **Pushed:** `origin/main` includes the Step 2 stack and the selected non-secret Step 3 deployment settings; no password or generated secret is stored in Git.
 - **VM:** Nothing deployed or running yet.
-- **Next:** Phase 1, Step 3 — clone the repository on the Ubuntu VM, create the private `.env`, and validate the resolved Compose configuration.
+- **Next:** Run the provided Step 3 commands on the Ubuntu VM, then report the Git clone and `docker compose config --quiet` results before starting the stack.
 
 ## History
+
+### 2026-07-18 — Phase 1, Step 3: deployment settings selected
+
+- Selected initial administrator username `Rasanga926` and timezone `Asia/Colombo`.
+- Selected multilingual OCR using `eng+sin+tam+chi_sim`, with additional container language packages `sin tam chi-sim` for Sinhala, Tamil, and Simplified Chinese; English is bundled by default.
+- Kept the administrator password, database password, and Paperless secret out of the log and repository; they will be entered or generated only on the VM.
+- Reason: prepare exact, secrets-safe VM commands without guessing user-specific settings.
 
 ### 2026-07-18 — Phase 1, Step 2: Compose stack committed and pushed
 
