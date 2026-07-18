@@ -1,0 +1,31 @@
+# Secrets and local environment overrides
+.env
+.env.*
+!.env.example
+
+# Paperless-ngx runtime and persistent data
+data/
+media/
+consume/
+export/
+postgres/
+redis/
+backups/
+
+# Archives, logs, and temporary files
+*.log
+*.bak
+*.tmp
+*.zip
+*.tar
+*.tar.gz
+
+# Windows and macOS clutter
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
