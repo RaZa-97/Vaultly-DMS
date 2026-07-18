@@ -3,11 +3,18 @@
 ## Current State
 
 - **Built:** Initial repository foundation plus a version-pinned Paperless-ngx Docker Compose stack using PostgreSQL, Redis, Gotenberg, and Tika; `.env.example` contains deployment placeholders only.
-- **Pushed:** `main` is published to the private GitHub repository and tracks `origin/main`; the initial project and repository checkpoint commits are present remotely.
+- **Pushed:** Step 2 commit `cad0281` is on `origin/main` with the Compose stack, expanded environment template, and service documentation.
 - **VM:** Nothing deployed or running yet.
-- **Next:** Validate the Step 2 Compose configuration, commit it, and push it to GitHub; then begin Step 3 VM setup.
+- **Next:** Phase 1, Step 3 — clone the repository on the Ubuntu VM, create the private `.env`, and validate the resolved Compose configuration.
 
 ## History
+
+### 2026-07-18 — Phase 1, Step 2: Compose stack committed and pushed
+
+- Static checks confirmed all five services are defined, every Compose interpolation variable exists in `.env.example`, no image uses a floating `latest` tag, and all secret fields contain placeholders.
+- Docker is not installed on the Windows development machine, so runtime Compose validation is deferred to the Ubuntu VM before startup.
+- Created and pushed commit `cad0281` (`feat: add Paperless Docker Compose stack`) to `origin/main`.
+- Reason: publish a reviewed deployment definition for the Git-based transfer workflow and leave the project ready for VM configuration.
 
 ### 2026-07-18 — Phase 1, Step 2: Compose stack prepared
 
