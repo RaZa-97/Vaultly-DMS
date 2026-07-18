@@ -3,11 +3,16 @@
 ## Current State
 
 - **Built:** Initial repository documentation, ignore rules, and a secrets-safe environment template; local Git repository initialized on `main` with the GitHub `origin` configured.
-- **Pushed:** Not yet; the initial commit and push are the next actions in Step 1.
+- **Pushed:** Not yet; initial commit `638c755` exists locally and the log checkpoint will be committed before the first push.
 - **VM:** Nothing deployed or running yet.
-- **Next:** Review and commit the starter files, then push `main` to GitHub.
+- **Next:** Commit this log checkpoint, then push `main` to GitHub.
 
 ## History
+
+### 2026-07-18 — Phase 1, Step 1: initial commit created
+
+- Created commit `638c755` (`chore: initialize Vaultly project`) after confirming the environment template contains placeholders only and the ignore rules protect `.env` and runtime data.
+- Reason: preserve the reviewed project foundation as an auditable checkpoint before publishing it to the private GitHub repository.
 
 ### 2026-07-18 — Phase 1, Step 1: initial project files
 
