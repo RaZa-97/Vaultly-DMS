@@ -2,12 +2,21 @@
 
 ## Current State
 
-- **Built:** Initial repository documentation, ignore rules, and a secrets-safe environment template; local Git repository initialized on `main` with the GitHub `origin` configured.
+- **Built:** Initial repository foundation plus a version-pinned Paperless-ngx Docker Compose stack using PostgreSQL, Redis, Gotenberg, and Tika; `.env.example` contains deployment placeholders only.
 - **Pushed:** `main` is published to the private GitHub repository and tracks `origin/main`; the initial project and repository checkpoint commits are present remotely.
 - **VM:** Nothing deployed or running yet.
-- **Next:** Phase 1, Step 2 — add the current official Paperless-ngx Docker Compose setup with PostgreSQL, Redis, Gotenberg, and Tika.
+- **Next:** Validate the Step 2 Compose configuration, commit it, and push it to GitHub; then begin Step 3 VM setup.
 
 ## History
+
+### 2026-07-18 — Phase 1, Step 2: Compose stack prepared
+
+- Added `docker-compose.yml`, adapted from the current official Paperless-ngx PostgreSQL + Tika template.
+- Configured Paperless-ngx `2.20.15`, PostgreSQL `18.4`, Redis `8.8.0`, Gotenberg `8.25`, and Apache Tika `3.2.3.0` as five cooperating services.
+- Routed database credentials, the application secret, initial admin credentials, timezone, OCR language, user mapping, and host port through the ignored `.env` file.
+- Expanded `.env.example` with every deployment value required by this Compose stack, using placeholders for all secrets and user-specific values, plus an optional field for installing non-default OCR language packs.
+- Documented what each container does in `README.md`.
+- Reason: create a reproducible, secrets-safe deployment definition that can be transferred to the Ubuntu VM through GitHub.
 
 ### 2026-07-18 — Phase 1, Step 1: first GitHub push completed
 
