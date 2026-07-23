@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests. The supported Vaultly title/logo integration is working.
-- **Pushed:** `origin/main` includes the Step 7 SVG branding and corrected read-only static-route mounts through commit `d32bb01`, plus accumulated deployment history and credential-file protection. This final pause/decision log update is pending push. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the Step 7 SVG branding, corrected read-only static-route mounts, and custom-frontend handoff through commit `0bca2f7`, plus credential-file protection. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are Up, the webserver is healthy, the test document remains searchable, and the primary Vaultly vault-dial logo displays. Paperless's hard-coded top-left feather, browser favicon, “BY PAPERLESS-NGX,” and some attribution remain.
 - **Next:** Resume Step 7 by creating a version-pinned custom Vaultly frontend/container image based on Paperless-ngx `2.20.15`, removing the remaining Paperless visual attribution, replacing the favicon, documenting the upgrade-maintenance workflow, and testing without risking persistent volumes.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: custom frontend handoff published
+
+- Pushed commit `0bca2f7` (`docs: record custom frontend handoff`) to private `origin/main`.
+- The repository source of truth now contains the verified stopping point, accepted maintenance tradeoff, and exact next implementation objective.
+- Reason: ensure tomorrow's session can resume from `PROJECT_LOG.md` without relying on chat history.
 
 ### 2026-07-23 — Phase 1, Step 7: paused before custom frontend image
 
