@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` includes the Step 7 SVG branding, accumulated deployment history, and credential-file ignore rule. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the Step 7 SVG branding and supported read-only Compose logo mount through commit `a16cf02`, plus accumulated deployment history and credential-file protection. No VM secret or local credential file is stored in Git.
 - **VM:** The running VM has pulled through `b5b7017` and the title is `VAULTLY`, but both authenticated and login pages still use Paperless's default feather. Diagnostics confirmed the UI attempt created no logo file. A repository-controlled environment/mount fix is prepared locally but not yet pushed or deployed; services remain healthy.
-- **Next:** Commit and push the validated branding environment/mount fix, then pull it on the VM, add the two non-secret `.env` values, recreate the webserver, and verify the login logo.
+- **Next:** Pull commit `a16cf02` on the VM, add the two non-secret branding values to `.env`, recreate the webserver, and verify the login logo.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: supported logo mount fix published
+
+- Created and pushed commit `a16cf02` (`fix: deploy Vaultly logo through Compose`) to private `origin/main`.
+- The VM can now deploy the repository-owned SVG through a read-only mount and supported Paperless environment setting.
+- Reason: publish the deterministic fix before recreating the running webserver.
 
 ### 2026-07-23 — Phase 1, Step 7: logo mount fix validated
 
