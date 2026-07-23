@@ -3,11 +3,45 @@
 ## Current State
 
 - **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` includes the Step 7 SVG branding and supported read-only Compose logo mount through commit `a16cf02`, plus accumulated deployment history and credential-file protection. No VM secret or local credential file is stored in Git.
-- **VM:** The running VM has pulled through `b5b7017` and the title is `VAULTLY`, but both authenticated and login pages still use Paperless's default feather. Diagnostics confirmed the UI attempt created no logo file. A repository-controlled environment/mount fix is prepared locally but not yet pushed or deployed; services remain healthy.
-- **Next:** Pull commit `a16cf02` on the VM, add the two non-secret branding values to `.env`, recreate the webserver, and verify the login logo.
+- **Pushed:** `origin/main` includes the Step 7 SVG branding and supported read-only Compose logo mount through commit `7b0d66f`, plus accumulated deployment history and credential-file protection. No VM secret or local credential file is stored in Git.
+- **VM:** The custom setting is active, but `/logo/vaultly-logo.svg` returns 404 even though the media file exists. Runtime inspection shows `MEDIA_URL=/` is not served by this direct Granian deployment, while `STATIC_URL=/static/` has a populated static root. A static-route fix is prepared locally but not yet published or deployed.
+- **Next:** Commit and push the validated static-route branding fix, then pull it on the VM, update the non-secret logo path, recreate the webserver, and verify rendering.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: static logo route fix validated
+
+- Confirmed both read-only source files exist in the repository and their Compose targets match the served static root.
+- Confirmed the environment logo URL matches the mounted `/static/vaultly-logo.svg` path and the diff has no whitespace errors or unrelated files.
+- Reason: validate path agreement before the next controlled webserver recreation.
+
+### 2026-07-23 — Phase 1, Step 7: static logo route fix prepared
+
+- Verified `MEDIA_ROOT=/usr/src/paperless/media` and `MEDIA_URL=/`, while repeated requests to `/logo/vaultly-logo.svg` return 404.
+- Verified `STATIC_ROOT=/usr/src/paperless/static` and `STATIC_URL=/static/` with the application static tree present.
+- Replaced the ineffective media-directory mount with read-only logo/favicon file mounts in the served static root and changed the logo value to `/static/vaultly-logo.svg`.
+- Reason: align the configured browser URL with the route this direct container deployment actually serves.
+
+### 2026-07-23 — Phase 1, Step 7: custom logo setting active but image broken
+
+- Refreshed the private login page after webserver recreation.
+- Confirmed Paperless switched away from its default logo and attempted to render the configured custom image, but the browser displayed a broken-image placeholder.
+- The result narrows the issue to the logo request path or file-serving behavior, not environment loading.
+- Reason: diagnose the remaining path mismatch before making another deployment change.
+
+### 2026-07-23 — Phase 1, Step 7: webserver recreated with logo mount
+
+- Recreated only `vaultly-webserver-1`; the other four services and persistent volumes remained running.
+- The first status check showed health still starting, while logs confirmed database/Redis connections, no pending migrations, OCR language installation, final Django checks with zero issues, and Granian listening on port `8000`.
+- A transient missing-Chinese-OCR check occurred while that package was concurrently installing; installation completed and the subsequent system check passed.
+- Reason: load the supported repository-mounted Vaultly logo without interrupting persistent database or document storage.
+
+### 2026-07-23 — Phase 1, Step 7: supported logo fix staged on VM
+
+- Fast-forwarded the VM checkout through commit `7b0d66f`.
+- Added the two non-secret title/logo values to the ignored VM `.env` and verified them.
+- Reran `docker compose config --quiet` successfully with no warnings or errors.
+- Reason: validate the final runtime definition before safely recreating the Paperless webserver.
 
 ### 2026-07-23 — Phase 1, Step 7: supported logo mount fix published
 

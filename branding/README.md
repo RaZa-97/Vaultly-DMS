@@ -7,6 +7,6 @@
 
 The circular dial, four index marks, and central hub evoke a vault mechanism. The dial's hands form the letter **V**.
 
-`docker-compose.yml` mounts this directory read-only at Paperless's `/media/logo`
-directory. The supported `PAPERLESS_APP_LOGO=/logo/vaultly-logo.svg` setting
-selects the primary wordmark without modifying the container image.
+`docker-compose.yml` mounts the primary logo and favicon read-only into
+Paperless's served static root. The supported application-logo setting selects
+`/static/vaultly-logo.svg` without modifying the container image.

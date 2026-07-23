@@ -32,7 +32,8 @@ services:
     volumes:
       - data:/usr/src/paperless/data
       - media:/usr/src/paperless/media
-      - ./branding:/usr/src/paperless/media/logo:ro
+      - ./branding/vaultly-logo.svg:/usr/src/paperless/static/vaultly-logo.svg:ro
+      - ./branding/vaultly-favicon.svg:/usr/src/paperless/static/vaultly-favicon.svg:ro
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
     env_file:
