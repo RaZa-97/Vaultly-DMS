@@ -3,11 +3,18 @@
 ## Current State
 
 - **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` currently contains the Step 2 stack and selected non-secret deployment settings. Local commit `88d2571` contains the Step 7 branding, accumulated deployment log, and credential-file ignore rule; push is pending. No VM secret is stored in Git.
+- **Pushed:** `origin/main` includes the Step 7 SVG branding, accumulated deployment history, and credential-file ignore rule. No VM secret or local credential file is stored in Git.
 - **VM:** Phase 1 Step 6 is complete: `vaultly-ocr-test.png` uploaded and persisted, preview rendering works, OCR extracted all test text exactly, and full-text search returned the document. Vaultly's core document workflow is proven.
-- **Next:** Commit and push the validated Step 7 branding and accumulated deployment log, then pull and apply the branding on the VM.
+- **Next:** Pull `origin/main` into `~/vaultly` on the VM and apply the published Vaultly logo in Paperless-ngx settings.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: branding published to GitHub
+
+- Pushed commits `88d2571` and `077cfa2` successfully to private `origin/main`.
+- GitHub now provides the Step 7 branding and current deployment history for the VM's normal `git pull` workflow.
+- Confirmed the ignored local credential file and VM-only `.env` were not included.
+- Reason: publish the reviewed assets safely before applying them to the running instance.
 
 ### 2026-07-23 — Phase 1, Step 7: branding checkpoint committed
 
