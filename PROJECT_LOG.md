@@ -4,10 +4,45 @@
 
 - **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
 - **Pushed:** `origin/main` includes the Step 7 SVG branding, accumulated deployment history, and credential-file ignore rule. No VM secret or local credential file is stored in Git.
-- **VM:** Phase 1 Step 6 is complete: `vaultly-ocr-test.png` uploaded and persisted, preview rendering works, OCR extracted all test text exactly, and full-text search returned the document. Vaultly's core document workflow is proven.
-- **Next:** Pull `origin/main` into `~/vaultly` on the VM and apply the published Vaultly logo in Paperless-ngx settings.
+- **VM:** The running VM has pulled through `b5b7017` and the title is `VAULTLY`, but both authenticated and login pages still use Paperless's default feather. Diagnostics confirmed the UI attempt created no logo file. A repository-controlled environment/mount fix is prepared locally but not yet pushed or deployed; services remain healthy.
+- **Next:** Commit and push the validated branding environment/mount fix, then pull it on the VM, add the two non-secret `.env` values, recreate the webserver, and verify the login logo.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: logo mount fix validated
+
+- Confirmed the Compose change is a single correctly indented read-only bind mount.
+- Confirmed `.env.example` contains the supported non-secret title and logo path and that the working diff has no whitespace errors or unrelated files.
+- Reason: review the deterministic branding deployment change before publication and VM recreation.
+
+### 2026-07-23 — Phase 1, Step 7: reproducible logo configuration prepared
+
+- Confirmed the Configuration UI attempt created no additional file in Paperless's media logo directory and logged no runtime logo error.
+- Added the supported `PAPERLESS_APP_TITLE` and `PAPERLESS_APP_LOGO` variables to `.env.example`.
+- Added a read-only bind mount from repository `branding/` to Paperless's `/usr/src/paperless/media/logo`, making the selected SVG available after every container replacement without image patching.
+- Documented the supported path in the branding guide.
+- Reason: replace the ineffective manual upload with a reproducible Git-deployed configuration.
+
+### 2026-07-23 — Phase 1, Step 7: custom logo uploaded through UI
+
+- Used the Configuration file picker to upload the repository's primary `vaultly-logo.svg`.
+- Saved and hard-refreshed the application; the title displays as `VAULTLY`, while the authenticated dashboard's large Paperless wordmark remains.
+- The direct `/media/logo/...` URL is not a valid public route in this deployment, so login-page rendering still needs verification.
+- Reason: verify the supported application-logo location before considering unsupported changes to Paperless's built-in dashboard attribution.
+
+### 2026-07-23 — Phase 1, Step 7: application title applied; logo pending
+
+- Set the supported application title to `Vaultly`; the navigation and welcome text updated successfully.
+- After refresh, Paperless's default feather/wordmark remained visible instead of the custom Vaultly SVG.
+- Kept the services unchanged and paused to verify the media URL and saved logo configuration rather than guessing.
+- Reason: distinguish successful title configuration from actual custom-logo rendering before marking Step 7 complete.
+
+### 2026-07-23 — Phase 1, Step 7: branding deployed to VM storage
+
+- Fast-forwarded the VM checkout from `0f955ec` to published commit `b5b7017`.
+- Verified all primary/dark wordmark and favicon SVGs are present under `~/vaultly/branding`.
+- Copied the primary logo and favicon into the persistent Paperless media volume at `/usr/src/paperless/media/logo` with `paperless:paperless` ownership.
+- Reason: make the repository-owned assets available to Paperless's supported application-logo configuration without modifying the container image.
 
 ### 2026-07-23 — Phase 1, Step 7: branding published to GitHub
 
