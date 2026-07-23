@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` includes the Step 7 SVG branding and supported read-only Compose logo mount through commit `7b0d66f`, plus accumulated deployment history and credential-file protection. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the Step 7 SVG branding and corrected read-only static-route mounts through commit `678b26d`, plus accumulated deployment history and credential-file protection. No VM secret or local credential file is stored in Git.
 - **VM:** The custom setting is active, but `/logo/vaultly-logo.svg` returns 404 even though the media file exists. Runtime inspection shows `MEDIA_URL=/` is not served by this direct Granian deployment, while `STATIC_URL=/static/` has a populated static root. A static-route fix is prepared locally but not yet published or deployed.
-- **Next:** Commit and push the validated static-route branding fix, then pull it on the VM, update the non-secret logo path, recreate the webserver, and verify rendering.
+- **Next:** Pull the static-route branding fix on the VM, update the non-secret logo path, recreate the webserver, and verify rendering.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: static logo route fix published
+
+- Created and pushed commit `678b26d` (`fix: serve Vaultly logo from static route`) to private `origin/main`.
+- The published runtime now mounts the logo/favicon into Paperless's served static root and selects `/static/vaultly-logo.svg`.
+- Reason: deploy the path verified against the running container's actual static configuration.
 
 ### 2026-07-23 — Phase 1, Step 7: static logo route fix validated
 
