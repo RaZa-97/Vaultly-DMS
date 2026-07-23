@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+/ACCESS TOKENS & LOGIN CREDENTIALS.txt
 
 # Paperless-ngx runtime and persistent data
 data/
