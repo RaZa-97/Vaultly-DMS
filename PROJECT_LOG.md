@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** Initial repository foundation plus a version-pinned Paperless-ngx Docker Compose stack using PostgreSQL, Redis, Gotenberg, and Tika; Step 3 non-secret settings are selected for admin `Rasanga926`, timezone `Asia/Colombo`, and English/Sinhala/Tamil/Simplified Chinese OCR.
-- **Pushed:** `origin/main` includes the Step 2 stack and the selected non-secret Step 3 deployment settings; no password or generated secret is stored in Git.
+- **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
+- **Pushed:** `origin/main` currently contains the Step 2 stack and selected non-secret deployment settings. Local commit `88d2571` contains the Step 7 branding, accumulated deployment log, and credential-file ignore rule; push is pending. No VM secret is stored in Git.
 - **VM:** Phase 1 Step 6 is complete: `vaultly-ocr-test.png` uploaded and persisted, preview rendering works, OCR extracted all test text exactly, and full-text search returned the document. Vaultly's core document workflow is proven.
 - **Next:** Commit and push the validated Step 7 branding and accumulated deployment log, then pull and apply the branding on the VM.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: branding checkpoint committed
+
+- Created commit `88d2571` (`feat: add Vaultly branding`) on top of the restored `origin/main` history.
+- The commit contains the four SVG assets, branding guide, accumulated project log, and exact ignore rule for the local credential file.
+- Push is pending; no VM `.env` value or local credential file is included.
+- Reason: preserve the reviewed branding and deployment history as an auditable checkpoint before publication.
 
 ### 2026-07-23 — Phase 1, Step 7: branding and Git state validated
 
