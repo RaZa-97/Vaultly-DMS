@@ -2,12 +2,35 @@
 
 ## Current State
 
-- **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` includes the Step 7 SVG branding and corrected read-only static-route mounts through commit `678b26d`, plus accumulated deployment history and credential-file protection. No VM secret or local credential file is stored in Git.
-- **VM:** The custom setting is active, but `/logo/vaultly-logo.svg` returns 404 even though the media file exists. Runtime inspection shows `MEDIA_URL=/` is not served by this direct Granian deployment, while `STATIC_URL=/static/` has a populated static root. A static-route fix is prepared locally but not yet published or deployed.
-- **Next:** Pull the static-route branding fix on the VM, update the non-secret logo path, recreate the webserver, and verify rendering.
+- **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests. The supported Vaultly title/logo integration is working.
+- **Pushed:** `origin/main` includes the Step 7 SVG branding and corrected read-only static-route mounts through commit `d32bb01`, plus accumulated deployment history and credential-file protection. This final pause/decision log update is pending push. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are Up, the webserver is healthy, the test document remains searchable, and the primary Vaultly vault-dial logo displays. Paperless's hard-coded top-left feather, browser favicon, “BY PAPERLESS-NGX,” and some attribution remain.
+- **Next:** Resume Step 7 by creating a version-pinned custom Vaultly frontend/container image based on Paperless-ngx `2.20.15`, removing the remaining Paperless visual attribution, replacing the favicon, documenting the upgrade-maintenance workflow, and testing without risking persistent volumes.
 
 ## History
+
+### 2026-07-23 — Phase 1, Step 7: paused before custom frontend image
+
+- User approved expanding Phase 1 to a maintained custom frontend/container image that removes the remaining Paperless feather, favicon, “BY PAPERLESS-NGX,” and related visual attribution.
+- Acknowledged that this is an upgrade-sensitive customization: each future Paperless version change must reapply and test the frontend patch.
+- Confirmed the safe stopping point: supported Vaultly logo works, all five services are healthy, persistent data and the OCR/search test document are intact, and the original `Ubuntu-Desktop` VM remains powered off as fallback.
+- Next session must read this log first, inspect the Paperless-ngx `2.20.15` frontend source, implement a version-pinned custom image through Git, and test it by recreating only the webserver.
+- Reason: preserve a precise, secrets-safe handoff before pausing work overnight.
+
+### 2026-07-23 — Phase 1, Step 7: supported Vaultly branding verified
+
+- Confirmed the authenticated dashboard renders the indigo/teal Vaultly vault-dial wordmark.
+- Confirmed all five containers are Up and `vaultly-webserver-1` is healthy after the final recreation.
+- Identified the remaining feather, browser favicon, and “BY PAPERLESS-NGX” text as separate built-in frontend attribution not replaced by the supported application title/logo settings.
+- The user requested their removal; doing so requires an upgrade-sensitive custom frontend patch/image beyond the supported Step 7 configuration.
+- Reason: document the verified supported result and the maintenance tradeoff before expanding implementation scope.
+
+### 2026-07-23 — Phase 1, Step 7: static Vaultly logo served successfully
+
+- Opened `http://192.168.56.105:8000/static/vaultly-logo.svg` from Windows and confirmed the correct indigo/teal vault-dial wordmark renders.
+- This verifies the repository file, read-only static mount, web route, and browser SVG rendering end to end.
+- Login-page integration and final container health remain to be checked.
+- Reason: isolate successful asset delivery before the final application-template verification.
 
 ### 2026-07-23 — Phase 1, Step 7: static logo route fix published
 
