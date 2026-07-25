@@ -2,12 +2,26 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend4` in approximately 148 seconds. It removes the global documentation entries and shared page-header help links and changes both application and login primary colors to Vaultly indigo `#4338CA`.
-- **Pushed:** `origin/main` includes the `frontend4` documentation/theme implementation through commit `22288e6`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. PostgreSQL, Redis, Tika, and Gotenberg remain running; the webserver is intentionally stopped after the successful `frontend4` build. Persistent services and volumes remain intact.
-- **Next:** Start the webserver from `frontend4`, confirm container health, then verify the documentation links, indigo theme, configuration lock, and retained OCR content.
+- **Built:** The VM successfully compiled and runs healthy `vaultly-paperless:2.20.15-frontend4`. Local revision `frontend5` adds a built-in Vaultly User Guide, redirects contextual and global help to it, and removes the public tour and version/update footer.
+- **Pushed:** `origin/main` includes the `frontend4` implementation and VM build record through commit `98d866e`. The `frontend5` guide revision is validated locally but not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `vaultly-paperless:2.20.15-frontend4`, reports healthy, and serves port `8000`. Persistent services and volumes remain intact.
+- **Next:** Commit and push `frontend5`, then build, deploy, and verify the Vaultly guide and simplified user interface on the VM.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: Vaultly guide and frontend5 prepared locally
+
+- Created a responsive built-in Vaultly User Guide covering onboarding, OCR/search, organization, storage paths, workflows, mail, permissions, configuration, troubleshooting, privacy, backups, and legal notices.
+- Restored the sidebar and profile Documentation destinations as Vaultly guide links and redirected contextual configuration, permission, storage-path, workflow, mail, welcome, and startup-error help to matching local sections.
+- Removed the Settings tour button, first-run tour action, and public upstream version/update footer; retained administrator-only System Status, Django Admin, Logs, and other permission-controlled tools.
+- Regenerated the complete patch mechanically from the exact pinned source; the patch applies cleanly, all guide anchors resolve, and Git whitespace validation passes.
+- Reason: provide an authentic self-contained Vaultly help experience without weakening necessary administrator operations or open-source license compliance.
+
+### 2026-07-25 — Phase 1, Step 7: frontend4 webserver healthy
+
+- Started `vaultly-webserver-1` from `vaultly-paperless:2.20.15-frontend4`.
+- Confirmed all five services are running, the webserver reports healthy, and port `8000` is published.
+- Reason: verify the indigo/documentation-removal runtime before preparing the self-contained Vaultly guide revision.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend4 image built on VM
 

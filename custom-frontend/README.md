@@ -11,11 +11,14 @@ and serves the Vaultly SVG favicon. The image copies the patched frontend plus
 the narrowly changed Django templates and favicon view into the official
 runtime. It also hides the Application Logo and Application Title controls,
 which removes the now-empty General Settings tab while preserving OCR and
-Barcode configuration. Global documentation menu entries and shared
-page-header help links are hidden, and the application plus login screen use
-Vaultly indigo `#4338CA` as their primary theme color. It does not remove or
-alter the upstream GPL license, copyright notices, source labels, or bundled
-project documentation.
+Barcode configuration. The application plus login screen use Vaultly indigo
+`#4338CA` as their primary theme color.
+
+Revision `frontend5` supplies a built-in Vaultly User Guide, points global and
+contextual help destinations to matching sections in that guide, and removes
+the public tour and upstream version/update footer. Administrator-only health
+and diagnostic controls remain available. The customization does not remove
+or alter upstream GPL license, copyright, or source notices.
 
 ## Upgrade rule
 

@@ -1,4 +1,5 @@
 diff --git a/src-ui/angular.json b/src-ui/angular.json
+index b55e441..dbb8979 100644
 --- a/src-ui/angular.json
 +++ b/src-ui/angular.json
 @@ -70,8 +70,7 @@
@@ -21,10 +22,66 @@ diff --git a/src-ui/angular.json b/src-ui/angular.json
                "src/assets",
                "src/manifest.webmanifest"
              ],
+diff --git a/src-ui/src/app/components/admin/config/config.component.ts b/src-ui/src/app/components/admin/config/config.component.ts
+index 44e482e..66e1fe2 100644
+--- a/src-ui/src/app/components/admin/config/config.component.ts
++++ b/src-ui/src/app/components/admin/config/config.component.ts
+@@ -62,6 +62,7 @@ export class ConfigComponent
+   private settingsService = inject(SettingsService)
+ 
+   public readonly ConfigOptionType = ConfigOptionType
++  private readonly hiddenConfigKeys = new Set(['app_logo', 'app_title'])
+ 
+   // generated dynamically
+   public configForm = new FormGroup({})
+@@ -69,11 +70,17 @@ export class ConfigComponent
+   public errors = {}
+ 
+   get optionCategories(): string[] {
+-    return Object.values(ConfigCategory)
++    return Object.values(ConfigCategory).filter(
++      (category) => this.getCategoryOptions(category).length > 0
++    )
+   }
+ 
+   getCategoryOptions(category: string): ConfigOption[] {
+-    return PaperlessConfigOptions.filter((o) => o.category === category)
++    return PaperlessConfigOptions.filter(
++      (option) =>
++        option.category === category &&
++        !this.hiddenConfigKeys.has(option.key)
++    )
+   }
+ 
+   initialConfig: PaperlessConfig
+@@ -156,7 +163,7 @@ export class ConfigComponent
+   }
+ 
+   getDocsUrl(key: string) {
+-    return `https://docs.paperless-ngx.com/configuration/#${key}`
++    return `/static/vaultly-docs/index.html#configuration`
+   }
+ 
+   public saveConfig() {
+diff --git a/src-ui/src/app/components/admin/settings/settings.component.html b/src-ui/src/app/components/admin/settings/settings.component.html
+index b228dac..1f4c885 100644
+--- a/src-ui/src/app/components/admin/settings/settings.component.html
++++ b/src-ui/src/app/components/admin/settings/settings.component.html
+@@ -4,9 +4,6 @@
+   info="Options to customize appearance, notifications and more. Settings apply to the <strong>current user only</strong>."
+   i18n-info
+   >
+-  <button class="btn btn-sm btn-outline-primary" (click)="tourService.start()">
+-    <i-bs class="me-1" name="airplane"></i-bs>&nbsp;<ng-container i18n>Start tour</ng-container>
+-  </button>
+   @if (permissionsService.isAdmin()) {
+     <button class="btn btn-sm btn-outline-primary position-relative ms-md-5 me-1" (click)="showSystemStatus()"
+       [disabled]="!systemStatus">
 diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-ui/src/app/components/app-frame/app-frame.component.html
+index 673eaf0..7ea1947 100644
 --- a/src-ui/src/app/components/app-frame/app-frame.component.html
 +++ b/src-ui/src/app/components/app-frame/app-frame.component.html
-@@ -7,19 +7,13 @@
+@@ -8,19 +8,13 @@
      [ngClass]="{ 'slim': slimSidebarEnabled, 'col-auto col-md-3 col-lg-2 col-xxxl-1' : !slimSidebarEnabled, 'py-3' : !customAppTitle?.length || slimSidebarEnabled, 'py-2': customAppTitle?.length }"
      routerLink="/dashboard"
      tourAnchor="tour.intro">
@@ -46,10 +103,147 @@ diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-
        }
      </div>
    </a>
+@@ -54,8 +48,7 @@
+           <i-bs class="me-2" name="door-open"></i-bs><ng-container i18n>Logout</ng-container>
+         </a>
+         <div class="dropdown-divider"></div>
+-        <a ngbDropdownItem class="nav-link" target="_blank" rel="noopener noreferrer"
+-          href="https://docs.paperless-ngx.com">
++        <a ngbDropdownItem class="nav-link" target="_blank" rel="noopener noreferrer" href="/static/vaultly-docs/index.html">
+           <i-bs class="me-2" name="question-circle"></i-bs><ng-container i18n>Documentation</ng-container>
+         </a>
+       </div>
+@@ -294,15 +287,13 @@
+                 </a>
+               </li>
+             }
+-            <li class="nav-item mt-2" tourAnchor="tour.outro">
++            <li class="nav-item mt-2">
+               <a class="px-3 py-2 text-muted small d-flex align-items-center flex-wrap text-decoration-none"
+-                target="_blank" rel="noopener noreferrer" href="https://docs.paperless-ngx.com" ngbPopover="Documentation"
+-                i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end" container="body"
+-                triggers="mouseenter:mouseleave" popoverClass="popover-slim">
++                target="_blank" rel="noopener noreferrer" href="/static/vaultly-docs/index.html">
+                 <i-bs class="d-flex" name="question-circle"></i-bs><span class="ms-1">&nbsp;<ng-container i18n>Documentation</ng-container></span>
+               </a>
+             </li>
+-            <li class="nav-item" [class.visually-hidden]="slimSidebarEnabled">
++            <li class="nav-item d-none" [class.visually-hidden]="slimSidebarEnabled">
+               <div class="px-3 py-0 text-muted small d-flex align-items-center flex-wrap">
+                 <div class="me-3">
+                   <a class="text-muted text-decoration-none" target="_blank" rel="noopener noreferrer"
+diff --git a/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html b/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html
+index 625c737..845438d 100644
+--- a/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html
++++ b/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html
+@@ -10,7 +10,7 @@
+   <div class="modal-body">
+ 
+     <pngx-input-text i18n-title title="Name" formControlName="name" [error]="error?.name" autocomplete="off"></pngx-input-text>
+-    <pngx-input-textarea i18n-title title="Path" formControlName="path" [error]="error?.path" hint="See <a target='_blank' href='https://docs.paperless-ngx.com/advanced_usage/#file-name-handling'>the documentation</a>." i18n-hint [monospace]="true"></pngx-input-textarea>
++    <pngx-input-textarea i18n-title title="Path" formControlName="path" [error]="error?.path" hint="See <a target='_blank' href='/static/vaultly-docs/index.html#storage-paths'>the Vaultly guide</a>." i18n-hint [monospace]="true"></pngx-input-textarea>
+ 
+     <div ngbAccordion>
+       <div ngbAccordionItem>
+diff --git a/src-ui/src/app/components/common/edit-dialog/workflow-edit-dialog/workflow-edit-dialog.component.html b/src-ui/src/app/components/common/edit-dialog/workflow-edit-dialog/workflow-edit-dialog.component.html
+index 5af53e7..37f312b 100644
+--- a/src-ui/src/app/components/common/edit-dialog/workflow-edit-dialog/workflow-edit-dialog.component.html
++++ b/src-ui/src/app/components/common/edit-dialog/workflow-edit-dialog/workflow-edit-dialog.component.html
+@@ -260,7 +260,7 @@
+       @case (WorkflowActionType.Assignment) {
+         <div class="row">
+           <div class="col">
+-            <pngx-input-text i18n-title title="Assign title" formControlName="assign_title" i18n-hint hint="Can include some placeholders, see <a target='_blank' href='https://docs.paperless-ngx.com/usage/#workflows'>documentation</a>." [error]="error?.actions?.[i]?.assign_title"></pngx-input-text>
++            <pngx-input-text i18n-title title="Assign title" formControlName="assign_title" i18n-hint hint="Can include supported placeholders; see the <a target='_blank' href='/static/vaultly-docs/index.html#workflows'>Vaultly guide</a>." [error]="error?.actions?.[i]?.assign_title"></pngx-input-text>
+             <pngx-input-tags [allowCreate]="false" i18n-title title="Assign tags" formControlName="assign_tags"></pngx-input-tags>
+             <pngx-input-select i18n-title title="Assign document type" [items]="documentTypes" [allowNull]="true" formControlName="assign_document_type"></pngx-input-select>
+             <pngx-input-select i18n-title title="Assign correspondent" [items]="correspondents" [allowNull]="true" formControlName="assign_correspondent"></pngx-input-select>
+diff --git a/src-ui/src/app/components/common/page-header/page-header.component.html b/src-ui/src/app/components/common/page-header/page-header.component.html
+index 2832182..97d02dc 100644
+--- a/src-ui/src/app/components/common/page-header/page-header.component.html
++++ b/src-ui/src/app/components/common/page-header/page-header.component.html
+@@ -5,18 +5,6 @@
+       @if (subTitle) {
+         <span class="h6 mb-0 d-block d-md-inline fw-normal ms-md-3 text-truncate" style="line-height: 1.4">{{subTitle}}</span>
+       }
+-      @if (info) {
+-        <button class="btn btn-sm btn-link text-muted me-auto p-0 p-md-2" title="What's this?" i18n-title type="button" [ngbPopover]="infoPopover" [autoClose]="true">
+-          <i-bs name="question-circle"></i-bs>
+-        </button>
+-        <ng-template #infoPopover>
+-          <p [class.mb-0]="!infoLink" [innerHTML]="info"></p>
+-          @if (infoLink) {
+-            <a href="https://docs.paperless-ngx.com/{{infoLink}}" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
+-            <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
+-          }
+-        </ng-template>
+-      }
+     </h3>
+   </div>
+   <div class="btn-toolbar col col-md-auto gap-2">
+diff --git a/src-ui/src/app/components/common/permissions-select/permissions-select.component.html b/src-ui/src/app/components/common/permissions-select/permissions-select.component.html
+index f176140..d6ce29b 100644
+--- a/src-ui/src/app/components/common/permissions-select/permissions-select.component.html
++++ b/src-ui/src/app/components/common/permissions-select/permissions-select.component.html
+@@ -6,7 +6,7 @@
+     </button>
+     <ng-template #infoPopover>
+       <p i18n>Global permissions define what areas of the app and API endpoints users can access.</p>
+-      <a href="https://docs.paperless-ngx.com/usage/#global-permissions" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
++      <a href="/static/vaultly-docs/index.html#permissions" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
+       <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
+     </ng-template>
+   </label>
+diff --git a/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html b/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html
+index 6353281..38d62b3 100644
+--- a/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html
++++ b/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html
+@@ -1,10 +1,9 @@
+ <ngb-alert class="pe-3" type="primary" [dismissible]="true" (closed)="dismiss.emit(true)">
+-  <h4 class="alert-heading"><ng-container i18n>Paperless-ngx is running!</ng-container> 🎉</h4>
+-  <p i18n>You're ready to start uploading documents! Explore the various features of this web app on your own, or start a quick tour using the button below.</p>
+-  <p i18n>More detail on how to use and configure Paperless-ngx is always available in the <a href="https://docs.paperless-ngx.com" target="_blank">documentation</a>.</p>
++  <h4 class="alert-heading"><ng-container i18n>Vaultly is ready!</ng-container></h4>
++  <p i18n>You're ready to upload, organize, and search your business documents.</p>
++  <p i18n>Learn more in the <a href="/static/vaultly-docs/index.html#getting-started" target="_blank">Vaultly User Guide</a>.</p>
+   <hr>
+   <div class="d-flex align-items-end">
+-    <p class="lead fs-6 m-0"><em i18n>Thanks for being a part of the Paperless-ngx community!</em></p>
+-    <button class="btn btn-primary ms-auto flex-shrink-0" (click)="tourService.start()"><ng-container i18n>Start the tour</ng-container> &rarr;</button>
++    <p class="lead fs-6 m-0"><em i18n>Your private document workspace is ready.</em></p>
+   </div>
+ </ngb-alert>
+diff --git a/src-ui/src/app/components/manage/mail/processed-mail-dialog/processed-mail-dialog.component.html b/src-ui/src/app/components/manage/mail/processed-mail-dialog/processed-mail-dialog.component.html
+index 26b63fd..2251224 100644
+--- a/src-ui/src/app/components/manage/mail/processed-mail-dialog/processed-mail-dialog.component.html
++++ b/src-ui/src/app/components/manage/mail/processed-mail-dialog/processed-mail-dialog.component.html
+@@ -4,7 +4,7 @@
+     <i-bs name="question-circle"></i-bs>
+   </button>
+   <ng-template #infoPopover>
+-    <a href="https://docs.paperless-ngx.com/usage#processed-mail" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
++    <a href="/static/vaultly-docs/index.html#mail" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
+     <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
+   </ng-template>
+   <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+diff --git a/src-ui/src/app/data/ui-settings.ts b/src-ui/src/app/data/ui-settings.ts
+index 6ace748..1f29ab3 100644
+--- a/src-ui/src/app/data/ui-settings.ts
++++ b/src-ui/src/app/data/ui-settings.ts
+@@ -17,7 +17,7 @@ export enum GlobalSearchType {
+   TITLE_CONTENT = 'title-content',
+ }
+ 
+-export const PAPERLESS_GREEN_HEX = '#17541f'
++export const PAPERLESS_GREEN_HEX = '#4338CA'
+ 
+ export const SETTINGS_KEYS = {
+   VERSION: 'version',
 diff --git a/src-ui/src/index.html b/src-ui/src/index.html
+index de85328..de135a1 100644
 --- a/src-ui/src/index.html
 +++ b/src-ui/src/index.html
-@@ -2,13 +2,12 @@
+@@ -2,14 +2,13 @@
  <html lang="en" data-bs-theme="auto">
  <head>
    <meta charset="utf-8">
@@ -68,6 +262,7 @@ diff --git a/src-ui/src/index.html b/src-ui/src/index.html
  <body>
    <pngx-root></pngx-root>
 diff --git a/src-ui/src/manifest.webmanifest b/src-ui/src/manifest.webmanifest
+index 4a31324..e095cfd 100644
 --- a/src-ui/src/manifest.webmanifest
 +++ b/src-ui/src/manifest.webmanifest
 @@ -1,18 +1,14 @@
@@ -93,19 +288,71 @@ diff --git a/src-ui/src/manifest.webmanifest b/src-ui/src/manifest.webmanifest
 +  "short_name": "Vaultly",
    "start_url": "/"
  }
-
+diff --git a/src-ui/src/theme.scss b/src-ui/src/theme.scss
+index 61e5fe4..4c94f64 100644
+--- a/src-ui/src/theme.scss
++++ b/src-ui/src/theme.scss
+@@ -1,8 +1,8 @@
+ @use "sass:color";
+ @mixin paperless-green {
+-  // base color e.g. #17541f = hsl(128, 57%, 21%)
+-  --pngx-primary: 128, 57%;
+-  --pngx-primary-lightness: 21%;
++  // Vaultly brand indigo #4338CA = hsl(245, 65%, 51%)
++  --pngx-primary: 245, 65%;
++  --pngx-primary-lightness: 51%;
+ }
+ 
+ :root {
+@@ -68,7 +68,7 @@ $form-check-radio-checked-bg-image-dark: url("data:image/svg+xml,<svg xmlns='htt
+ 
+ // Dark mode
+ @mixin paperless-green-dark-mode {
+-  --pngx-primary-lightness: 31%;
++  --pngx-primary-lightness: 61%;
+   --bs-primary: hsl(var(--pngx-primary),var(--pngx-primary-lightness));
+ }
+ 
+diff --git a/src/documents/static/base.css b/src/documents/static/base.css
+index 90d8d7b..34052fc 100644
+--- a/src/documents/static/base.css
++++ b/src/documents/static/base.css
+@@ -1,10 +1,10 @@
+ body {
+   --bs-body-bg: #f5f5f5;
+-  --bs-link-color-rgb: 23, 84, 31; /* #17541f */
+-  --bs-link-hover-color-rgb: 15, 56, 20;
+-  --pngx-primary: #17541f;
+-  --pngx-primary-hover: #0f3614;
+-  --pngx-primary-active: #0c2c10;
++  --bs-link-color-rgb: 67, 56, 202; /* #4338CA */
++  --bs-link-hover-color-rgb: 55, 48, 163;
++  --pngx-primary: #4338CA;
++  --pngx-primary-hover: #3730A3;
++  --pngx-primary-active: #312E81;
+ }
+ 
+ .logo {
 diff --git a/src/documents/templates/account/login.html b/src/documents/templates/account/login.html
+index 767c21d..2712f05 100644
 --- a/src/documents/templates/account/login.html
 +++ b/src/documents/templates/account/login.html
-@@ -4,3 +4,3 @@
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
  {% block head_title %}
 -    {% trans "Paperless-ngx sign in" %}
 +    {% trans "Vaultly sign in" %}
  {% endblock head_title %}
+ 
+ {% block form_top_content %}
 diff --git a/src/documents/templates/index.html b/src/documents/templates/index.html
+index 2bb3758..d2740fe 100644
 --- a/src/documents/templates/index.html
 +++ b/src/documents/templates/index.html
-@@ -7,12 +7,11 @@
+@@ -5,16 +5,15 @@
+ <html lang="en" data-bs-theme="auto">
+ <head>
  	<meta charset="utf-8">
 -	<title>Paperless-ngx</title>
 +	<title>Vaultly</title>
@@ -120,10 +367,23 @@ diff --git a/src/documents/templates/index.html b/src/documents/templates/index.
  	<link rel="stylesheet" href="{% static styles_css %}">
 -	<link rel="apple-touch-icon" href="{% static apple_touch_icon %}">
  </head>
+ <body>
+ 	<pngx-root>
+@@ -59,7 +58,7 @@
+ 			<div class="app-loader align-self-center text-center mx-auto">
+ 				{% include "paperless-ngx/snippets/svg_logo.html" with extra_attrs="class='logo mb-2' height='6em'" %}
+ 				<h6 class="m-auto">{% translate "Paperless-ngx is loading..." %}</h6>
+-				<p class="warning m-auto mt-3 small fade hide">{% translate "Still here?! Hmm, something might be wrong." %} <a href="https://docs.paperless-ngx.com">{% translate "Here's a link to the docs." %}</a></p>
++			<p class="warning m-auto mt-3 small fade hide">{% translate "Still here? Something may need attention." %} <a href="{% static 'vaultly-docs/index.html' %}#troubleshooting">{% translate "Open the Vaultly troubleshooting guide." %}</a></p>
+ 			</div>
+ 		</div>
+ 		<script type="text/javascript">{# Pass Django messages to Angular frontend #}
 diff --git a/src/documents/templates/paperless-ngx/base.html b/src/documents/templates/paperless-ngx/base.html
+index 4b9a911..c359f3c 100644
 --- a/src/documents/templates/paperless-ngx/base.html
 +++ b/src/documents/templates/paperless-ngx/base.html
-@@ -25,16 +25,9 @@
+@@ -24,17 +24,10 @@
+                     {% include "paperless-ngx/snippets/svg_logo.html" with extra_attrs="width='300' class='logo mb-4'" %}
                  {% else %}
                      {% if APP_LOGO %}
 -                        <img src="{{APP_LOGO}}" width="300" class="logo mb-1" />
@@ -143,9 +403,10 @@ diff --git a/src/documents/templates/paperless-ngx/base.html b/src/documents/tem
                      {% endif %}
                  {% endif %}
 diff --git a/src/paperless/views.py b/src/paperless/views.py
+index 1464a0e..6f34820 100644
 --- a/src/paperless/views.py
 +++ b/src/paperless/views.py
-@@ -98,7 +98,7 @@
+@@ -98,8 +98,8 @@ class StandardPagination(PageNumberPagination):
  class FaviconView(View):
      def get(self, request, *args, **kwargs):
          try:
@@ -155,133 +416,4 @@ diff --git a/src/paperless/views.py b/src/paperless/views.py
 +            return FileResponse(path.open("rb"), content_type="image/svg+xml")
          except FileNotFoundError:
              return HttpResponseNotFound("favicon.ico not found")
-diff --git a/src-ui/src/app/components/admin/config/config.component.ts b/src-ui/src/app/components/admin/config/config.component.ts
---- a/src-ui/src/app/components/admin/config/config.component.ts
-+++ b/src-ui/src/app/components/admin/config/config.component.ts
-@@ -60,16 +60,23 @@
-   private settingsService = inject(SettingsService)
  
-   public readonly ConfigOptionType = ConfigOptionType
-+  private readonly hiddenConfigKeys = new Set(['app_logo', 'app_title'])
- 
-   // generated dynamically
-   public configForm = new FormGroup({})
- 
-   public errors = {}
- 
-   get optionCategories(): string[] {
--    return Object.values(ConfigCategory)
-+    return Object.values(ConfigCategory).filter(
-+      (category) => this.getCategoryOptions(category).length > 0
-+    )
-   }
- 
-   getCategoryOptions(category: string): ConfigOption[] {
--    return PaperlessConfigOptions.filter((o) => o.category === category)
-+    return PaperlessConfigOptions.filter(
-+      (option) =>
-+        option.category === category &&
-+        !this.hiddenConfigKeys.has(option.key)
-+    )
-   }
-diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-ui/src/app/components/app-frame/app-frame.component.html
---- a/src-ui/src/app/components/app-frame/app-frame.component.html
-+++ b/src-ui/src/app/components/app-frame/app-frame.component.html
-@@ -53,10 +53,5 @@
-         <a ngbDropdownItem class="nav-link d-flex" href="accounts/logout/" (click)="onLogout()">
-           <i-bs class="me-2" name="door-open"></i-bs><ng-container i18n>Logout</ng-container>
-         </a>
--        <div class="dropdown-divider"></div>
--        <a ngbDropdownItem class="nav-link" target="_blank" rel="noopener noreferrer"
--          href="https://docs.paperless-ngx.com">
--          <i-bs class="me-2" name="question-circle"></i-bs><ng-container i18n>Documentation</ng-container>
--        </a>
-       </div>
-     </li>
-@@ -294,14 +292,6 @@
-                 </a>
-               </li>
-             }
--            <li class="nav-item mt-2" tourAnchor="tour.outro">
--              <a class="px-3 py-2 text-muted small d-flex align-items-center flex-wrap text-decoration-none"
--                target="_blank" rel="noopener noreferrer" href="https://docs.paperless-ngx.com" ngbPopover="Documentation"
--                i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end" container="body"
--                triggers="mouseenter:mouseleave" popoverClass="popover-slim">
--                <i-bs class="d-flex" name="question-circle"></i-bs><span class="ms-1">&nbsp;<ng-container i18n>Documentation</ng-container></span>
--              </a>
--            </li>
-             <li class="nav-item" [class.visually-hidden]="slimSidebarEnabled">
-               <div class="px-3 py-0 text-muted small d-flex align-items-center flex-wrap">
-                 <div class="me-3">
-diff --git a/src-ui/src/app/components/common/page-header/page-header.component.html b/src-ui/src/app/components/common/page-header/page-header.component.html
---- a/src-ui/src/app/components/common/page-header/page-header.component.html
-+++ b/src-ui/src/app/components/common/page-header/page-header.component.html
-@@ -5,17 +5,5 @@
-       @if (subTitle) {
-         <span class="h6 mb-0 d-block d-md-inline fw-normal ms-md-3 text-truncate" style="line-height: 1.4">{{subTitle}}</span>
-       }
--      @if (info) {
--        <button class="btn btn-sm btn-link text-muted me-auto p-0 p-md-2" title="What's this?" i18n-title type="button" [ngbPopover]="infoPopover" [autoClose]="true">
--          <i-bs name="question-circle"></i-bs>
--        </button>
--        <ng-template #infoPopover>
--          <p [class.mb-0]="!infoLink" [innerHTML]="info"></p>
--          @if (infoLink) {
--            <a href="https://docs.paperless-ngx.com/{{infoLink}}" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
--            <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
--          }
--        </ng-template>
--      }
-     </h3>
-   </div>
-diff --git a/src-ui/src/app/data/ui-settings.ts b/src-ui/src/app/data/ui-settings.ts
---- a/src-ui/src/app/data/ui-settings.ts
-+++ b/src-ui/src/app/data/ui-settings.ts
-@@ -15,6 +15,6 @@
-   TITLE_CONTENT = 'title-content',
- }
- 
--export const PAPERLESS_GREEN_HEX = '#17541f'
-+export const PAPERLESS_GREEN_HEX = '#4338CA'
- 
- export const SETTINGS_KEYS = {
-diff --git a/src-ui/src/theme.scss b/src-ui/src/theme.scss
---- a/src-ui/src/theme.scss
-+++ b/src-ui/src/theme.scss
-@@ -1,8 +1,8 @@
- @use "sass:color";
- @mixin paperless-green {
--  // base color e.g. #17541f = hsl(128, 57%, 21%)
--  --pngx-primary: 128, 57%;
--  --pngx-primary-lightness: 21%;
-+  // Vaultly brand indigo #4338CA = hsl(245, 65%, 51%)
-+  --pngx-primary: 245, 65%;
-+  --pngx-primary-lightness: 51%;
- }
- 
- :root {
-@@ -67,6 +67,6 @@
- 
- // Dark mode
- @mixin paperless-green-dark-mode {
--  --pngx-primary-lightness: 31%;
-+  --pngx-primary-lightness: 61%;
-   --bs-primary: hsl(var(--pngx-primary),var(--pngx-primary-lightness));
- }
-diff --git a/src/documents/static/base.css b/src/documents/static/base.css
---- a/src/documents/static/base.css
-+++ b/src/documents/static/base.css
-@@ -1,8 +1,8 @@
- body {
-   --bs-body-bg: #f5f5f5;
--  --bs-link-color-rgb: 23, 84, 31; /* #17541f */
--  --bs-link-hover-color-rgb: 15, 56, 20;
--  --pngx-primary: #17541f;
--  --pngx-primary-hover: #0f3614;
--  --pngx-primary-active: #0c2c10;
-+  --bs-link-color-rgb: 67, 56, 202; /* #4338CA */
-+  --bs-link-hover-color-rgb: 55, 48, 163;
-+  --pngx-primary: #4338CA;
-+  --pngx-primary-hover: #3730A3;
-+  --pngx-primary-active: #312E81;
- }
