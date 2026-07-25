@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** A version-pinned custom frontend image definition now applies a narrow Vaultly branding patch to the exact Paperless-ngx `2.20.15` source revision. The deployed VM has already passed upload, preview, OCR, indexing, and search smoke tests on the official runtime.
-- **Pushed:** `origin/main` currently ends at commit `6d8bd74`. Custom frontend implementation commit `8fd0992` is committed locally and awaiting push. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes custom frontend implementation commit `8fd0992` and checkpoint commit `f73aab3`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are Up, the webserver is healthy, the test document remains searchable, and the primary Vaultly vault-dial logo displays. Paperless's hard-coded top-left feather, browser favicon, “BY PAPERLESS-NGX,” and some attribution remain.
 - **Next:** Validate the complete Docker build definition, commit and push it, then build and recreate only the webserver on the VM without touching persistent volumes.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: custom frontend checkpoint published
+
+- Pushed commits `8fd0992` and `f73aab3` to private `origin/main`.
+- The VM can now fast-forward to the custom image definition and perform the first full Docker build.
+- Reason: publish the verified Windows-side checkpoint before the Docker-equipped VM test.
 
 ### 2026-07-25 — Phase 1, Step 7: custom frontend implementation committed
 
