@@ -2,12 +2,20 @@
 
 ## Current State
 
-- **Built:** A version-pinned custom frontend image definition now applies a narrow Vaultly branding patch to the exact Paperless-ngx `2.20.15` source revision. The deployed VM has already passed upload, preview, OCR, indexing, and search smoke tests on the official runtime.
-- **Pushed:** `origin/main` includes custom frontend implementation commit `8fd0992` and checkpoint commit `f73aab3`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are Up, the webserver is healthy, the test document remains searchable, and the primary Vaultly vault-dial logo displays. Paperless's hard-coded top-left feather, browser favicon, “BY PAPERLESS-NGX,” and some attribution remain.
-- **Next:** Validate the complete Docker build definition, commit and push it, then build and recreate only the webserver on the VM without touching persistent volumes.
+- **Built:** The VM successfully compiled custom image `vaultly-paperless:2.20.15-frontend1` from the exact pinned Paperless-ngx source and Vaultly patch. The earlier official runtime already passed upload, preview, OCR, indexing, and search smoke tests.
+- **Pushed:** `origin/main` includes the custom frontend implementation and publication record through commit `df55156`. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. The custom image build completed in 143 seconds after temporary desktop unresponsiveness caused by compilation pressure on the 4 GB VM. The existing five services remain running on the previous webserver container.
+- **Next:** Recreate only the webserver from the newly built custom image, verify container health, then inspect the header, login page, browser favicon, document data, and OCR search result.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: custom frontend image built on VM
+
+- Fast-forwarded the VM checkout to publication commit `df55156`.
+- Successfully built `vaultly-paperless:2.20.15-frontend1`; all 25 Docker build steps completed in approximately 143 seconds.
+- The Angular compilation temporarily made the 4 GB Ubuntu Desktop guest appear frozen, but it recovered and completed without cancellation, shutdown, or build errors.
+- The build did not recreate containers or modify persistent volumes.
+- Reason: verify the complete pinned frontend compilation before changing the running webserver.
 
 ### 2026-07-25 — Phase 1, Step 7: custom frontend checkpoint published
 
