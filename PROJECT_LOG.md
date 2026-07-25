@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** The VM successfully compiled and runs `vaultly-paperless:2.20.15-frontend2`. A local `frontend3` patch now hides the Application Logo and Application Title controls and removes the resulting empty General Settings tab while retaining OCR and Barcode configuration.
-- **Pushed:** `origin/main` includes verified branding, healthy runtime, and retained OCR search records through commit `b53f51c`. The `frontend3` configuration-screen change is not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the `frontend3` configuration-screen branding lock in commit `c93f59c`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running on healthy `frontend2`. Login and authenticated views show the Vaultly favicon/title/wordmark/header with no feather or byline. The administrator `Rasanga926` can sign in, and the dashboard retains one document with 74 indexed characters.
 - **Next:** Validate, commit, and push `frontend3`; build and deploy it on the VM, then verify the Configuration screen and recheck the retained OCR document content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: branding-control lock published
+
+- Created and pushed commit `c93f59c` (`feat: lock Vaultly branding controls`) to private `origin/main`.
+- Confirmed the complete `frontend3` patch applies cleanly to the exact pinned Paperless-ngx source and passes repository whitespace validation.
+- Reason: publish the fixed-branding Configuration UI before the VM build and deployment test.
 
 ### 2026-07-25 — Phase 1, Step 7: branding controls hidden locally
 
