@@ -9,8 +9,10 @@ The patch removes the hard-coded navigation feather and “by Paperless-ngx”
 bylines, changes the browser, login, and installable-app identity to Vaultly,
 and serves the Vaultly SVG favicon. The image copies the patched frontend plus
 the narrowly changed Django templates and favicon view into the official
-runtime. It does not remove or alter the upstream GPL license, copyright
-notices, source labels, or project documentation.
+runtime. It also hides the Application Logo and Application Title controls,
+which removes the now-empty General Settings tab while preserving OCR and
+Barcode configuration. It does not remove or alter the upstream GPL license,
+copyright notices, source labels, or project documentation.
 
 ## Upgrade rule
 

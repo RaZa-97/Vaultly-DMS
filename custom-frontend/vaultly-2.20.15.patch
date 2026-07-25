@@ -155,3 +155,32 @@ diff --git a/src/paperless/views.py b/src/paperless/views.py
 +            return FileResponse(path.open("rb"), content_type="image/svg+xml")
          except FileNotFoundError:
              return HttpResponseNotFound("favicon.ico not found")
+diff --git a/src-ui/src/app/components/admin/config/config.component.ts b/src-ui/src/app/components/admin/config/config.component.ts
+--- a/src-ui/src/app/components/admin/config/config.component.ts
++++ b/src-ui/src/app/components/admin/config/config.component.ts
+@@ -60,16 +60,23 @@
+   private settingsService = inject(SettingsService)
+ 
+   public readonly ConfigOptionType = ConfigOptionType
++  private readonly hiddenConfigKeys = new Set(['app_logo', 'app_title'])
+ 
+   // generated dynamically
+   public configForm = new FormGroup({})
+ 
+   public errors = {}
+ 
+   get optionCategories(): string[] {
+-    return Object.values(ConfigCategory)
++    return Object.values(ConfigCategory).filter(
++      (category) => this.getCategoryOptions(category).length > 0
++    )
+   }
+ 
+   getCategoryOptions(category: string): ConfigOption[] {
+-    return PaperlessConfigOptions.filter((o) => o.category === category)
++    return PaperlessConfigOptions.filter(
++      (option) =>
++        option.category === category &&
++        !this.hiddenConfigKeys.has(option.key)
++    )
+   }

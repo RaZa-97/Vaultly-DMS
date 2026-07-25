@@ -2,12 +2,21 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled corrected custom image `vaultly-paperless:2.20.15-frontend2` in 137 seconds. It includes the Angular branding plus narrowly patched Django login/title/favicon files.
-- **Pushed:** `origin/main` includes the verified `frontend2` correction and successful-build record through commit `9827544`. No VM secret or local credential file is stored in Git.
+- **Built:** The VM successfully compiled and runs `vaultly-paperless:2.20.15-frontend2`. A local `frontend3` patch now hides the Application Logo and Application Title controls and removes the resulting empty General Settings tab while retaining OCR and Barcode configuration.
+- **Pushed:** `origin/main` includes verified branding, healthy runtime, and retained OCR search records through commit `b53f51c`. The `frontend3` configuration-screen change is not yet committed or pushed. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running on healthy `frontend2`. Login and authenticated views show the Vaultly favicon/title/wordmark/header with no feather or byline. The administrator `Rasanga926` can sign in, and the dashboard retains one document with 74 indexed characters.
-- **Next:** Open the returned `vaultly-ocr-test` result and inspect its Content tab to confirm the stored extracted text survived; then record the Phase 1 checkpoint.
+- **Next:** Validate, commit, and push `frontend3`; build and deploy it on the VM, then verify the Configuration screen and recheck the retained OCR document content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: branding controls hidden locally
+
+- User requested removal of the Application Logo and Application Title feature from the Configuration screen.
+- Added a central frontend filter for `app_logo` and `app_title`; because those are the only General-category options in Paperless-ngx `2.20.15`, the empty General Settings tab is also omitted automatically.
+- OCR Settings and Barcode Settings remain available and unchanged.
+- The compatible backend settings remain available to the deployment environment, but ordinary administrators can no longer alter Vaultly branding through this UI.
+- Prepared image revision `vaultly-paperless:2.20.15-frontend3`.
+- Reason: prevent accidental administrator changes to the fixed Vaultly identity without affecting document-processing configuration.
 
 ### 2026-07-25 — Phase 1, Step 7: retained OCR search verified
 
@@ -54,7 +63,7 @@
 - The uncached login-page check confirmed the custom Vaultly logo renders, but the “BY PAPERLESS-NGX” byline, `Paperless-ngx sign in` tab title, and green root favicon remain.
 - Traced those surfaces to Django account/base templates and the backend `FaviconView`, separate from the compiled Angular frontend.
 - Extended the exact-version patch and Dockerfile to copy only the changed login/base/index templates, favicon view, and Vaultly SVG favicon into revision `frontend2`.
-- Added a narrow Git whitespace rule for unified patch files because their context marker legitimately precedes upstream tab-indented template lines.
+- Added a narrow Git whitespace rule for unified patch files because their context marker legitimately precedes upstream tab-indented or blank template lines.
 - Kept upstream license, copyright, source labels, documentation, diagnostic version name, and application behavior unchanged.
 - Reason: cover all three user-visible branding surfaces discovered during the first real browser verification.
 
