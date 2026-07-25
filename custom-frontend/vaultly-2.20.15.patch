@@ -93,3 +93,65 @@ diff --git a/src-ui/src/manifest.webmanifest b/src-ui/src/manifest.webmanifest
 +  "short_name": "Vaultly",
    "start_url": "/"
  }
+
+diff --git a/src/documents/templates/account/login.html b/src/documents/templates/account/login.html
+--- a/src/documents/templates/account/login.html
++++ b/src/documents/templates/account/login.html
+@@ -4,3 +4,3 @@
+ {% block head_title %}
+-    {% trans "Paperless-ngx sign in" %}
++    {% trans "Vaultly sign in" %}
+ {% endblock head_title %}
+diff --git a/src/documents/templates/index.html b/src/documents/templates/index.html
+--- a/src/documents/templates/index.html
++++ b/src/documents/templates/index.html
+@@ -7,12 +7,11 @@
+ 	<meta charset="utf-8">
+-	<title>Paperless-ngx</title>
++	<title>Vaultly</title>
+ 	<base href="{% url 'base' %}">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<meta name="cookie_prefix" content="{{cookie_prefix}}">
+ 	<meta name="robots" content="noindex,nofollow">
+ 	<meta name="author" content="The Paperless-ngx Team">
+-	<link rel="icon" type="image/x-icon" href="favicon.ico">
++	<link rel="icon" type="image/svg+xml" href="favicon.ico">
+ 	<link rel="manifest" href="{% static webmanifest %}">
+ 	<link rel="stylesheet" href="{% static styles_css %}">
+-	<link rel="apple-touch-icon" href="{% static apple_touch_icon %}">
+ </head>
+diff --git a/src/documents/templates/paperless-ngx/base.html b/src/documents/templates/paperless-ngx/base.html
+--- a/src/documents/templates/paperless-ngx/base.html
++++ b/src/documents/templates/paperless-ngx/base.html
+@@ -25,16 +25,9 @@
+                 {% else %}
+                     {% if APP_LOGO %}
+-                        <img src="{{APP_LOGO}}" width="300" class="logo mb-1" />
+-                        <div class="d-flex flex-column align-items-end mb-4">
+-                            <span class="byline text-uppercase font-monospace">by Paperless-ngx</span>
+-                        </div>
++                        <img src="{{APP_LOGO}}" width="300" class="logo mb-4" />
+                     {% else %}
+                         <h1 class="font-weight-normal text-primary mb-1 d-flex justify-content-center align-items-start">
+-                            {% include "paperless-ngx/snippets/svg_leaf.html" with extra_attrs="width='30' class='mt-2'" %}
+-                            <div class="d-flex flex-column align-items-end mb-4">
+-                                <span class="ms-2">{{ APP_TITLE }}</span>
+-                                <span class="byline text-uppercase font-monospace">by Paperless-ngx</span>
+-                            </div>
++                            <span>{{ APP_TITLE }}</span>
+                         </h1>
+                     {% endif %}
+                 {% endif %}
+diff --git a/src/paperless/views.py b/src/paperless/views.py
+--- a/src/paperless/views.py
++++ b/src/paperless/views.py
+@@ -98,7 +98,7 @@
+ class FaviconView(View):
+     def get(self, request, *args, **kwargs):
+         try:
+-            path = Path(staticfiles_storage.path("paperless/img/favicon.ico"))
+-            return FileResponse(path.open("rb"), content_type="image/x-icon")
++            path = Path(staticfiles_storage.path("paperless/img/vaultly-favicon.svg"))
++            return FileResponse(path.open("rb"), content_type="image/svg+xml")
+         except FileNotFoundError:
+             return HttpResponseNotFound("favicon.ico not found")

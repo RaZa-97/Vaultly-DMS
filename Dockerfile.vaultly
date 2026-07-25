@@ -17,6 +17,7 @@ RUN git -C /source apply --check /tmp/vaultly.patch \
     && git -C /source apply /tmp/vaultly.patch
 
 COPY branding/vaultly-favicon.svg /source/src-ui/src/vaultly-favicon.svg
+COPY branding/vaultly-favicon.svg /source/src/paperless/static/paperless/img/vaultly-favicon.svg
 
 FROM docker.io/node:20-trixie-slim AS frontend
 
@@ -35,7 +36,21 @@ FROM ghcr.io/paperless-ngx/paperless-ngx:2.20.15
 COPY --from=frontend --chown=paperless:paperless \
   /src/src/documents/static/frontend/ \
   /usr/src/paperless/src/documents/static/frontend/
+COPY --from=source --chown=paperless:paperless \
+  /source/src/documents/templates/paperless-ngx/base.html \
+  /usr/src/paperless/src/documents/templates/paperless-ngx/base.html
+COPY --from=source --chown=paperless:paperless \
+  /source/src/documents/templates/account/login.html \
+  /usr/src/paperless/src/documents/templates/account/login.html
+COPY --from=source --chown=paperless:paperless \
+  /source/src/documents/templates/index.html \
+  /usr/src/paperless/src/documents/templates/index.html
+COPY --from=source --chown=paperless:paperless \
+  /source/src/paperless/views.py \
+  /usr/src/paperless/src/paperless/views.py
+COPY --from=source --chown=paperless:paperless \
+  /source/src/paperless/static/paperless/img/vaultly-favicon.svg \
+  /usr/src/paperless/src/paperless/static/paperless/img/vaultly-favicon.svg
 
 RUN cd /usr/src/paperless/src \
     && s6-setuidgid paperless python3 manage.py collectstatic --clear --no-input --link
-

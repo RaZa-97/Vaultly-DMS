@@ -6,9 +6,11 @@ the exact upstream commit, applies `vaultly-2.20.15.patch`, and copies the
 compiled result into the official `2.20.15` runtime image.
 
 The patch removes the hard-coded navigation feather and “by Paperless-ngx”
-byline, changes the browser and installable-app identity to Vaultly, and uses
-the Vaultly SVG favicon. It does not remove or alter the upstream GPL license,
-copyright notices, source labels, or project documentation.
+bylines, changes the browser, login, and installable-app identity to Vaultly,
+and serves the Vaultly SVG favicon. The image copies the patched frontend plus
+the narrowly changed Django templates and favicon view into the official
+runtime. It does not remove or alter the upstream GPL license, copyright
+notices, source labels, or project documentation.
 
 ## Upgrade rule
 
@@ -19,4 +21,3 @@ Never change only the runtime image tag. For each Paperless-ngx upgrade:
 3. Build the image and confirm the patch applies without errors.
 4. Test login, document preview, upload, OCR, search, and branding surfaces.
 5. Update `PROJECT_LOG.md`, commit, push, and then deploy on the VM.
-

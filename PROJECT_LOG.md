@@ -2,12 +2,21 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled custom image `vaultly-paperless:2.20.15-frontend1` from the exact pinned Paperless-ngx source and Vaultly patch. The earlier official runtime already passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` includes the custom frontend implementation and successful-build record through commit `d074a59`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses custom image `vaultly-paperless:2.20.15-frontend1`, reports healthy, and listens on port `8000`. Final Django checks and background tasks passed.
-- **Next:** Inspect the custom header, login page, and browser favicon; confirm the existing document and OCR search result survived the webserver replacement.
+- **Built:** The VM successfully compiled and is running custom image `vaultly-paperless:2.20.15-frontend1`. Visual verification found that its Angular header patch is present, but the login byline, tab title, and root favicon also require narrowly patched Django backend files; revision `frontend2` is prepared locally to cover them.
+- **Pushed:** `origin/main` includes the first custom image and healthy-runtime record through commit `be9eb2b`. The `frontend2` correction is not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `frontend1`, reports healthy, and listens on port `8000`. The login screen still shows the upstream byline, tab title, and favicon.
+- **Next:** Validate, commit, and push `frontend2`; rebuild it on the VM, recreate only the webserver, then repeat visual and retained-data checks.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: login branding gap corrected locally
+
+- The uncached login-page check confirmed the custom Vaultly logo renders, but the “BY PAPERLESS-NGX” byline, `Paperless-ngx sign in` tab title, and green root favicon remain.
+- Traced those surfaces to Django account/base templates and the backend `FaviconView`, separate from the compiled Angular frontend.
+- Extended the exact-version patch and Dockerfile to copy only the changed login/base/index templates, favicon view, and Vaultly SVG favicon into revision `frontend2`.
+- Added a narrow Git whitespace rule for unified patch files because their context marker legitimately precedes upstream tab-indented template lines.
+- Kept upstream license, copyright, source labels, documentation, diagnostic version name, and application behavior unchanged.
+- Reason: cover all three user-visible branding surfaces discovered during the first real browser verification.
 
 ### 2026-07-25 — Phase 1, Step 7: custom webserver healthy
 

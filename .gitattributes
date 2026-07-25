@@ -1,0 +1,4 @@
+# Unified patches may legitimately contain a diff context marker followed by
+# an upstream tab-indented line; do not flag that representation as code
+# indentation damage in this repository.
+custom-frontend/*.patch whitespace=-space-before-tab
