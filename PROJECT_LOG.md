@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** The VM successfully compiled and runs `vaultly-paperless:2.20.15-frontend3`. Local revision `frontend4` removes the global documentation entries and shared page-header help links and changes both application and login primary colors to Vaultly indigo `#4338CA`.
-- **Pushed:** `origin/main` includes the healthy `frontend3` record through commit `882dacc`. The `frontend4` documentation/theme change is not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the `frontend4` documentation/theme implementation through commit `22288e6`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses `vaultly-paperless:2.20.15-frontend3`, reports healthy, and serves port `8000`. Persistent services and volumes remained intact.
-- **Next:** Validate, commit, and push `frontend4`; build and deploy it on the VM, then verify the documentation links, indigo theme, configuration lock, and retained OCR content.
+- **Next:** Pull, build, and deploy `frontend4` on the VM, then verify the documentation links, indigo theme, configuration lock, and retained OCR content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend4 published
+
+- Validated the custom patch against the exact pinned Paperless-ngx `v2.20.15` source and passed `git diff --check`.
+- Committed and pushed the documentation-link removal and Vaultly indigo theme as `22288e6`.
+- Reason: make the reproducible custom image ready for the user's VM build and verification.
 
 ### 2026-07-25 — Phase 1, Step 7: documentation and indigo theme prepared locally
 
