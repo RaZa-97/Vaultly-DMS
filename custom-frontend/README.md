@@ -20,6 +20,10 @@ the public tour and upstream version/update footer. Administrator-only health
 and diagnostic controls remain available. The customization does not remove
 or alter upstream GPL license, copyright, or source notices.
 
+Revision `frontend6` also applies the Vaultly name to the Django administration
+header, browser title, and dashboard heading without changing its behavior,
+models, or permissions.
+
 ## Upgrade rule
 
 Never change only the runtime image tag. For each Paperless-ngx upgrade:

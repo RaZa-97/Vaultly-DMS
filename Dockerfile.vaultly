@@ -49,6 +49,9 @@ COPY --from=source --chown=paperless:paperless \
   /source/src/paperless/views.py \
   /usr/src/paperless/src/paperless/views.py
 COPY --from=source --chown=paperless:paperless \
+  /source/src/paperless/urls.py \
+  /usr/src/paperless/src/paperless/urls.py
+COPY --from=source --chown=paperless:paperless \
   /source/src/paperless/static/paperless/img/vaultly-favicon.svg \
   /usr/src/paperless/src/paperless/static/paperless/img/vaultly-favicon.svg
 COPY --from=source --chown=paperless:paperless \

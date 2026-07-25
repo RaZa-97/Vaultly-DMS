@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend5` in approximately 153 seconds. It adds a built-in Vaultly User Guide, redirects contextual and global help to it, and removes the public tour and version/update footer.
-- **Pushed:** `origin/main` includes the validated `frontend5` Vaultly guide and interface cleanup through commit `f25d075`. No VM secret or local credential file is stored in Git.
+- **Built:** The VM successfully compiled and runs healthy `vaultly-paperless:2.20.15-frontend5`. Local revision `frontend6` additionally changes the Django administration header, browser title, and dashboard heading to Vaultly.
+- **Pushed:** `origin/main` includes the healthy `frontend5` runtime record through commit `10aca16`. The validated `frontend6` Django Admin branding is not yet committed or pushed. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `vaultly-paperless:2.20.15-frontend5`, reports healthy, and serves port `8000`. Persistent services and volumes remain intact.
-- **Next:** Verify the built-in Vaultly guide, simplified user interface, administrator controls, and retained OCR document in the browser.
+- **Next:** Commit and push `frontend6`, then build, deploy, and verify the Vaultly-branded Django administration interface.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: Django Admin branding prepared locally
+
+- Changed the Django administration header to `Vaultly`, browser/site title to `Vaultly Admin`, and index heading to `Vaultly administration`.
+- Kept administrator models, actions, authentication, auditing, and permissions unchanged.
+- Prepared image revision `vaultly-paperless:2.20.15-frontend6` and validated the complete patch against the exact pinned source.
+- Reason: make the restricted administration surface consistent with the Vaultly identity.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend5 webserver healthy
 
