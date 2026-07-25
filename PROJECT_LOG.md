@@ -2,12 +2,21 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend6` in approximately 151 seconds. It changes the Django administration header, browser title, and dashboard heading to Vaultly.
-- **Pushed:** `origin/main` includes the validated `frontend6` Django Admin branding through commit `0795e31`. No VM secret or local credential file is stored in Git.
+- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend6` in approximately 151 seconds. Local revision `frontend7` expands the built-in guide into a detailed 22-section manual with examples and a downloadable PDF.
+- **Pushed:** `origin/main` includes the `frontend6` build record through commit `f2b2269`. The detailed HTML/PDF guide is validated locally but not yet committed or pushed. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. PostgreSQL, Redis, Tika, and Gotenberg remain running; the webserver is intentionally stopped after the successful `frontend6` build. Persistent services and volumes remain intact.
-- **Next:** Start the webserver from `frontend6`, confirm health, then verify the Vaultly-branded Django administration interface.
+- **Next:** Commit and push `frontend7`, then build, deploy, and verify the detailed HTML/PDF guide on the VM.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: detailed Vaultly manual and PDF prepared
+
+- Expanded the built-in guide to 22 sections covering every primary user and administrator feature, including realistic invoice, contract, HR, audit, OCR, workflow, permissions, backup, and troubleshooting examples.
+- Added print-specific A4 styling and a direct PDF-download control to the built-in guide.
+- Rendered `Vaultly-User-Guide.pdf` from the same HTML source so the web and PDF documentation remain aligned.
+- Prepared reproducible image revision `vaultly-paperless:2.20.15-frontend7`.
+- Validated all 22 internal links, confirmed the PDF has a valid `%PDF-1.4` header, and visually inspected the branded layout.
+- Reason: provide users and administrators with a detailed self-contained operating manual in both browser and portable PDF formats.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend6 image built on VM
 

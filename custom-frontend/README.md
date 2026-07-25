@@ -24,6 +24,10 @@ Revision `frontend6` also applies the Vaultly name to the Django administration
 header, browser title, and dashboard heading without changing its behavior,
 models, or permissions.
 
+Revision `frontend7` expands the bundled Vaultly documentation into a detailed
+22-section user and administrator manual and includes a matching downloadable
+PDF generated from the same source.
+
 ## Upgrade rule
 
 Never change only the runtime image tag. For each Paperless-ngx upgrade:

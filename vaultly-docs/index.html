@@ -6,35 +6,282 @@
   <meta name="color-scheme" content="light dark">
   <title>Vaultly User Guide</title>
   <style>
-    :root{--brand:#4338ca;--accent:#14b8a6;--ink:#172033;--muted:#64748b;--line:#dbe2ee;--panel:#f8fafc;--bg:#fff}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
-    header{color:#fff;background:linear-gradient(135deg,#312e81,#4338ca 60%,#0f766e);padding:3.5rem 1.5rem}.hero,.layout{max-width:1180px;margin:auto}
-    .brand{display:flex;align-items:center;gap:1rem}.mark{display:grid;place-items:center;width:58px;height:58px;border:4px solid #fff;border-radius:50%;font-weight:800;font-size:2rem}
-    h1{margin:.2rem 0;font-size:clamp(2rem,5vw,3.4rem)}header p{max-width:720px;margin:.5rem 0 0;color:#e0e7ff;font-size:1.1rem}
-    .layout{display:grid;grid-template-columns:250px 1fr;gap:3rem;padding:2.5rem 1.5rem 5rem}nav{position:sticky;top:1rem;align-self:start;border:1px solid var(--line);border-radius:14px;padding:1rem;background:var(--panel)}
-    nav strong{display:block;color:var(--brand);margin:.25rem .65rem .6rem}nav a{display:block;color:var(--ink);padding:.42rem .65rem;text-decoration:none;border-radius:8px}nav a:hover{color:var(--brand);background:#eef2ff}
-    main{min-width:0}section{scroll-margin-top:1rem;padding:0 0 2.4rem;margin:0 0 2.4rem;border-bottom:1px solid var(--line)}h2{color:var(--brand);font-size:1.75rem;margin:0 0 .8rem}h3{margin:1.4rem 0 .35rem}
-    .callout{padding:1rem 1.2rem;border-left:4px solid var(--accent);background:#f0fdfa;border-radius:0 10px 10px 0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem}.card{border:1px solid var(--line);border-radius:12px;padding:1rem;background:var(--panel)}
-    li{margin:.35rem 0}footer{color:var(--muted);font-size:.86rem}@media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static;columns:2}nav strong{column-span:all}}
-    @media(prefers-color-scheme:dark){:root{--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--panel:#111827;--bg:#0b1020}nav a:hover{background:#27235f}.callout{background:#0d3434}}
+    :root{--brand:#4338ca;--brand-dark:#312e81;--accent:#14b8a6;--ink:#172033;--muted:#64748b;--line:#dbe2ee;--panel:#f8fafc;--bg:#fff;--warn:#b45309}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--bg);font:15.5px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+    header{color:#fff;background:linear-gradient(135deg,var(--brand-dark),var(--brand) 60%,#0f766e);padding:3.4rem 1.5rem}.hero,.layout{max-width:1180px;margin:auto}
+    .brand{display:flex;align-items:center;gap:1rem}.mark{display:grid;place-items:center;width:62px;height:62px;border:4px solid #fff;border-radius:50%;font-weight:800;font-size:2rem}
+    h1{margin:.15rem 0;font-size:clamp(2rem,5vw,3.35rem)}header p{max-width:760px;margin:.45rem 0 0;color:#e0e7ff;font-size:1.08rem}
+    .toolbar{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.35rem}.button{display:inline-block;padding:.55rem .9rem;border:1px solid #c7d2fe;border-radius:8px;color:#fff;text-decoration:none;background:#ffffff18}.button:hover{background:#ffffff2b}
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:3rem;padding:2.5rem 1.5rem 5rem}nav{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow:auto;align-self:start;border:1px solid var(--line);border-radius:14px;padding:1rem;background:var(--panel)}
+    nav strong{display:block;color:var(--brand);margin:.25rem .65rem .6rem}nav a{display:block;color:var(--ink);padding:.35rem .65rem;text-decoration:none;border-radius:8px;font-size:.93rem}nav a:hover{color:var(--brand);background:#eef2ff}
+    main{min-width:0}section{scroll-margin-top:1rem;padding:0 0 2.5rem;margin:0 0 2.5rem;border-bottom:1px solid var(--line)}h2{color:var(--brand);font-size:1.75rem;margin:0 0 .8rem}h3{margin:1.45rem 0 .4rem;color:var(--brand-dark)}h4{margin:1.1rem 0 .3rem}p{margin:.4rem 0 .9rem}
+    .callout{padding:1rem 1.2rem;border-left:4px solid var(--accent);background:#f0fdfa;border-radius:0 10px 10px 0;margin:1rem 0}.warning{border-left-color:#f59e0b;background:#fffbeb}.example{border-left-color:var(--brand);background:#eef2ff}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1rem}.card{border:1px solid var(--line);border-radius:12px;padding:1rem;background:var(--panel)}.card h3{margin-top:0}
+    table{width:100%;border-collapse:collapse;margin:1rem 0 1.4rem;font-size:.94rem}th,td{border:1px solid var(--line);padding:.65rem .7rem;text-align:left;vertical-align:top}th{background:#eef2ff;color:var(--brand-dark)}
+    code{color:#3730a3;background:#eef2ff;padding:.12rem .32rem;border-radius:4px}li{margin:.35rem 0}.steps>li{padding-left:.25rem;margin:.6rem 0}.badge{display:inline-block;padding:.12rem .48rem;border-radius:99px;background:#ccfbf1;color:#115e59;font-size:.78rem;font-weight:700}
+    footer{color:var(--muted);font-size:.86rem}.page-break{break-before:page}.toc-print{display:none}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:static;max-height:none;columns:2}nav strong{column-span:all}.cards{grid-template-columns:1fr}}
+    @media(prefers-color-scheme:dark){:root{--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--panel:#111827;--bg:#0b1020}nav a:hover,.example{background:#27235f}.callout{background:#0d3434}.warning{background:#422006}th{background:#27235f;color:#e0e7ff}code{color:#c7d2fe;background:#27235f}}
+    @media print{
+      @page{size:A4;margin:15mm 14mm 17mm}body{font-size:10pt;color:#172033;background:#fff}header{padding:18mm 12mm;background:#4338ca!important;print-color-adjust:exact}.toolbar,nav{display:none}.layout{display:block;max-width:none;padding:10mm 3mm}.toc-print{display:block}.toc-print a{color:#172033;text-decoration:none}.cards{grid-template-columns:repeat(2,1fr)}section{break-inside:auto}h2,h3,h4{break-after:avoid}.card,.callout,table{break-inside:avoid}a{color:#312e81}footer{font-size:8pt}
+    }
   </style>
 </head>
 <body>
-  <header><div class="hero"><div class="brand"><span class="mark">V</span><div><h1>Vaultly User Guide</h1><p>Capture, organize, find, and protect your business documents from one private workspace.</p></div></div></div></header>
+  <header>
+    <div class="hero">
+      <div class="brand"><span class="mark">V</span><div><h1>Vaultly User Guide</h1><p>A practical manual for capturing, organizing, finding, automating, and protecting business documents.</p></div></div>
+      <div class="toolbar"><a class="button" href="/dashboard">Return to Vaultly</a><a class="button" href="Vaultly-User-Guide.pdf" download>Download PDF guide</a></div>
+    </div>
+  </header>
   <div class="layout">
-    <nav aria-label="Guide sections"><strong>Contents</strong><a href="#getting-started">Getting started</a><a href="#documents">Documents and OCR</a><a href="#organizing">Organizing</a><a href="#storage-paths">Storage paths</a><a href="#workflows">Workflows</a><a href="#mail">Email intake</a><a href="#permissions">Users and permissions</a><a href="#configuration">Configuration</a><a href="#troubleshooting">Troubleshooting</a><a href="#privacy">Privacy and backups</a><a href="#legal">About and licenses</a></nav>
+    <nav aria-label="Guide sections">
+      <strong>Contents</strong>
+      <a href="#quick-start">Quick start</a><a href="#dashboard">Dashboard</a><a href="#documents">Documents</a><a href="#ocr">OCR and content</a><a href="#search">Search and filters</a><a href="#organizing">Organization tools</a><a href="#storage-paths">Storage paths</a><a href="#custom-fields">Custom fields</a><a href="#saved-views">Saved views</a><a href="#workflows">Workflows</a><a href="#mail">Email intake</a><a href="#sharing">Download and sharing</a><a href="#trash">Trash</a><a href="#settings">Personal settings</a><a href="#users">Users and permissions</a><a href="#configuration">Application configuration</a><a href="#operations">Tasks, logs, and status</a><a href="#daily-examples">Business examples</a><a href="#security">Security and backups</a><a href="#troubleshooting">Troubleshooting</a><a href="#glossary">Glossary</a><a href="#legal">About and licenses</a>
+    </nav>
     <main>
-      <section id="getting-started"><h2>Getting started</h2><div class="cards"><div class="card"><h3>1. Upload</h3><p>Select <strong>Upload documents</strong> or drag files into the browser.</p></div><div class="card"><h3>2. Process</h3><p>Vaultly extracts text, runs OCR when needed, and creates a searchable record.</p></div><div class="card"><h3>3. Review</h3><p>Correct the title or date and add the right business metadata.</p></div><div class="card"><h3>4. Find</h3><p>Search inside documents or filter by tags, type, correspondent, or date.</p></div></div></section>
-      <section id="documents"><h2>Documents and OCR</h2><p>Vaultly accepts common office documents, PDFs, and images. OCR turns text in scans and photographs into searchable content. Processing time depends on file size, page count, and enabled languages.</p><h3>Search effectively</h3><ul><li>Search for a distinctive invoice number, customer name, or phrase.</li><li>Combine text search with filters for precise results.</li><li>Check the document’s <strong>Content</strong> tab to confirm extracted text.</li></ul><div class="callout"><strong>Tip:</strong> clear, straight scans produce the best OCR results.</div></section>
-      <section id="organizing"><h2>Organizing your records</h2><p><strong>Correspondents</strong> identify who sent or received a document. <strong>Document types</strong> describe what it is. <strong>Tags</strong> provide flexible labels, while <strong>custom fields</strong> store values such as account numbers, amounts, or review dates.</p><p>Use saved views for repeated searches. Keep names short, consistent, and meaningful to everyone in your business.</p></section>
-      <section id="storage-paths"><h2>Storage paths</h2><p>A storage path controls how archived files are named and arranged inside Vaultly-managed storage. It can contain folders, text, and supported placeholders based on document metadata.</p><ol><li>Give the path a descriptive name.</li><li>Start with a simple pattern and use <strong>Preview</strong>.</li><li>Confirm the preview before applying it broadly.</li><li>Use forward slashes between folders and avoid reserved characters.</li></ol><div class="callout">Continue opening and downloading managed documents through Vaultly.</div></section>
-      <section id="workflows"><h2>Workflows</h2><p>Workflows automate repeatable processing. A trigger decides when a workflow runs, conditions narrow the match, and actions update the document.</p><p>Actions can assign tags, correspondents, document types, storage paths, owners, or titles. Test a new workflow with a small sample first.</p></section>
-      <section id="mail"><h2>Email intake</h2><p>Authorized administrators can connect a mailbox and define rules for importing attachments. Use a dedicated business mailbox, restrict accepted messages, and review processed-mail history when an expected attachment is missing.</p></section>
-      <section id="permissions"><h2>Users and permissions</h2><p>Permissions determine which areas and actions a user can access. Grant only what each role needs.</p><ul><li><strong>View</strong> allows reading.</li><li><strong>Add</strong> allows creating.</li><li><strong>Change</strong> allows editing.</li><li><strong>Delete</strong> allows removal.</li></ul><p>Object permissions can further limit access to particular records. Restrict configuration, logs, and user management to trusted administrators.</p></section>
-      <section id="configuration"><h2>Configuration</h2><p>Application configuration controls OCR, barcode processing, and deployment-wide behavior. Changes affect every user and may affect new processing, so administrators should record and test them carefully.</p><p>Personal Settings affect only the signed-in user.</p></section>
-      <section id="troubleshooting"><h2>Troubleshooting</h2><h3>A document is not searchable</h3><p>Wait for processing, check File Tasks, inspect the Content tab, and confirm the correct OCR language is enabled.</p><h3>An upload fails</h3><p>Check the file type and size. If retrying fails, ask an administrator to review File Tasks and Logs.</p><h3>The page does not open</h3><p>Confirm the Vaultly VM is running and reachable. Administrators can check container health and System Status.</p></section>
-      <section id="privacy"><h2>Privacy and backups</h2><p>Vaultly is self-hosted, so your organization controls its server and access. Use strong individual accounts, review permissions, install trusted updates, and keep tested backups of the database, document media, and configuration secrets.</p><div class="callout"><strong>A VM snapshot alone is not a complete backup strategy.</strong> Maintain a separate recoverable backup outside the VM.</div></section>
-      <section id="legal"><h2>About and licenses</h2><p>Vaultly is a customized self-hosted document management experience. Its software foundation includes Paperless-ngx and other open-source components distributed under their respective licenses. Source notices and license obligations remain available in the project repository and image.</p><footer>Vaultly User Guide · Built for the Vaultly deployment · Interface revision 2.20.15</footer></section>
+      <section class="toc-print"><h2>Contents</h2><ol><li>Quick start and dashboard</li><li>Documents, OCR, and search</li><li>Organization and automation</li><li>Mail, sharing, and trash</li><li>Settings, users, and administration</li><li>Business examples, security, and troubleshooting</li></ol></section>
+
+      <section id="quick-start">
+        <h2>1. Quick start</h2>
+        <div class="cards">
+          <div class="card"><h3>Upload</h3><p>Select <strong>Upload documents</strong> or drag files into the browser.</p></div>
+          <div class="card"><h3>Process</h3><p>Vaultly extracts text, runs OCR when necessary, and creates a searchable record.</p></div>
+          <div class="card"><h3>Review</h3><p>Check the title, date, correspondent, type, tags, and extracted content.</p></div>
+          <div class="card"><h3>Retrieve</h3><p>Search for words inside the file or filter by structured metadata.</p></div>
+        </div>
+        <h3>Recommended first document</h3>
+        <ol class="steps"><li>Upload a non-sensitive sample invoice.</li><li>Wait until processing finishes.</li><li>Open it and check the <strong>Content</strong> tab.</li><li>Add a correspondent, document type, and tag.</li><li>Search for a unique phrase from the invoice.</li></ol>
+        <div class="example callout"><strong>Example:</strong> Upload “Acme Office Supplies Invoice 1048.pdf.” Set Correspondent to “Acme Office Supplies,” Type to “Invoice,” and Tag to “Accounts Payable.” Searching for “1048” should return it.</div>
+      </section>
+
+      <section id="dashboard">
+        <h2>2. Dashboard</h2>
+        <p>The Dashboard is the starting point after sign-in. It summarizes the collection and provides quick access to uploads and saved information.</p>
+        <table><thead><tr><th>Feature</th><th>What it does</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Search bar</td><td>Searches titles, extracted text, and indexed metadata.</td><td>Enter an invoice number such as <code>VLT-2026-0723</code>.</td></tr>
+          <tr><td>Upload documents</td><td>Adds files to the processing queue.</td><td>Upload a PDF invoice or photographed receipt.</td></tr>
+          <tr><td>Statistics</td><td>Shows collection totals such as document and character counts.</td><td>Confirm that the total increases after a successful upload.</td></tr>
+          <tr><td>Saved views/widgets</td><td>Provides shortcuts to frequently used filtered collections.</td><td>Display “Invoices awaiting payment.”</td></tr>
+        </tbody></table>
+      </section>
+
+      <section id="documents" class="page-break">
+        <h2>3. Documents</h2>
+        <p>A Vaultly document is more than the original file. It combines the file, searchable content, metadata, permissions, processing history, and optional notes.</p>
+        <h3>Uploading</h3>
+        <p>Use the dashboard upload button or drag and drop. Vaultly accepts common PDFs, images, and office formats supported by the deployment. Multiple files may be uploaded together.</p>
+        <div class="warning callout"><strong>Do not upload password-protected files unless your workflow is prepared to handle them.</strong> Encryption may prevent content extraction.</div>
+        <h3>Document details</h3>
+        <table><thead><tr><th>Field or tab</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Title</td><td>A clear human-readable name. Vaultly may suggest one automatically.</td><td>“July 2026 Internet Invoice”</td></tr>
+          <tr><td>Archive serial number</td><td>An optional unique filing reference.</td><td>“FIN-2026-0042”</td></tr>
+          <tr><td>Date created</td><td>The business date of the document, not necessarily the upload date.</td><td>The invoice issue date.</td></tr>
+          <tr><td>Correspondent</td><td>The person or organization associated with the document.</td><td>“Lanka Telecom”</td></tr>
+          <tr><td>Document type</td><td>The document’s category.</td><td>Invoice, Contract, Receipt, Tax Record</td></tr>
+          <tr><td>Storage path</td><td>The managed archive naming/location rule.</td><td>Finance/2026/Invoices</td></tr>
+          <tr><td>Tags</td><td>Flexible labels for status, topic, department, or retention.</td><td>“Paid,” “Confidential,” “FY2026”</td></tr>
+          <tr><td>Content</td><td>The text extracted from the document and used for search.</td><td>Customer names, totals, and invoice references.</td></tr>
+          <tr><td>Metadata</td><td>Technical details such as filename, media type, checksums, and size.</td><td>Useful when verifying file integrity.</td></tr>
+          <tr><td>Notes</td><td>User-entered context that should stay with the record.</td><td>“Approved by Finance on 25 July.”</td></tr>
+          <tr><td>History</td><td>An audit-oriented timeline of changes and processing events.</td><td>See when a tag or title was changed.</td></tr>
+          <tr><td>Permissions</td><td>Controls which users or groups may view or change this document.</td><td>Restrict payroll records to the HR group.</td></tr>
+        </tbody></table>
+        <h3>Editing safely</h3>
+        <p>Select <strong>Save</strong> to remain on the document or <strong>Save &amp; close</strong> to return to the list. Avoid changing metadata merely to test a setting on an important record.</p>
+      </section>
+
+      <section id="ocr">
+        <h2>4. OCR and extracted content</h2>
+        <p>OCR converts visible text in scans and photographs into machine-readable content. Documents that already contain embedded text may only need extraction.</p>
+        <h3>What affects OCR quality</h3>
+        <ul><li>Correct OCR language configuration.</li><li>Straight, well-lit pages with readable contrast.</li><li>Adequate resolution without excessive compression.</li><li>Minimal handwriting, shadows, folds, and background patterns.</li></ul>
+        <div class="example callout"><strong>Example:</strong> A scanned receipt contains “Silver Elephant 926.” After processing, that phrase appears under Content and can be found from the global search bar.</div>
+        <h3>When OCR is wrong</h3>
+        <p>Confirm the configured languages, rescan the page more clearly, or correct the indexed Content if your permissions allow it. Keep the original file as the authoritative visual record.</p>
+      </section>
+
+      <section id="search">
+        <h2>5. Search and filters</h2>
+        <p>Full-text search finds words inside documents. Filters narrow results using structured fields. Combining both is usually the fastest approach.</p>
+        <table><thead><tr><th>Method</th><th>Use it for</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Simple text search</td><td>Known names, phrases, or reference numbers.</td><td><code>Silver Elephant 926</code></td></tr>
+          <tr><td>Correspondent filter</td><td>Everything associated with one organization.</td><td>All records from “Acme Supplies.”</td></tr>
+          <tr><td>Document type filter</td><td>A business category.</td><td>Only Contracts.</td></tr>
+          <tr><td>Tag filter</td><td>Status or cross-category grouping.</td><td>Everything tagged “Needs Review.”</td></tr>
+          <tr><td>Date filter</td><td>A reporting or retention period.</td><td>Invoices created this quarter.</td></tr>
+          <tr><td>Custom-field filter</td><td>Organization-specific structured values.</td><td>Cost Centre equals “Sales.”</td></tr>
+        </tbody></table>
+        <h3>Search tips</h3>
+        <ul><li>Start with the most distinctive term.</li><li>Try the exact reference without punctuation if OCR may have split it.</li><li>Use filters when common words create too many results.</li><li>Save a useful filtered search as a Saved View.</li></ul>
+      </section>
+
+      <section id="organizing" class="page-break">
+        <h2>6. Organization tools</h2>
+        <h3>Correspondents</h3><p>Represent people or organizations connected to documents. Use one consistent name rather than variants.</p><div class="example callout"><strong>Example:</strong> Use “ABC Bank” for statements and letters instead of creating “ABC,” “ABC Bank Ltd,” and “A.B.C. Bank.”</div>
+        <h3>Document types</h3><p>Describe what the record is. Types should be stable business categories such as Invoice, Purchase Order, Contract, Statement, Receipt, Policy, or Employee Record.</p>
+        <h3>Tags</h3><p>Flexible labels that may overlap categories. Good uses include status, project, department, confidentiality, and retention markers.</p>
+        <h3>Matching</h3><p>Matching rules help Vaultly suggest or assign metadata from document content. Automatic learning improves as correctly classified examples accumulate. Administrators should review unexpected matches before applying broad automation.</p>
+      </section>
+
+      <section id="storage-paths">
+        <h2>7. Storage paths</h2>
+        <p>A storage path controls how archived files are named and arranged inside Vaultly-managed storage. It may use folders, fixed text, and supported placeholders derived from metadata.</p>
+        <ol class="steps"><li>Choose a descriptive name.</li><li>Enter a simple pattern.</li><li>Use <strong>Preview</strong> with a representative document.</li><li>Confirm that missing metadata does not create confusing paths.</li><li>Save and apply it to a small test group first.</li></ol>
+        <div class="example callout"><strong>Example design:</strong> Organize finance documents by year, correspondent, and type so a 2026 Acme invoice has a predictable managed path. Always verify the actual placeholder syntax offered by your Vaultly version using Preview.</div>
+        <div class="warning callout"><strong>Important:</strong> Do not manually rename files inside Vaultly’s managed media storage. Make changes through the Vaultly interface.</div>
+      </section>
+
+      <section id="custom-fields">
+        <h2>8. Custom fields</h2>
+        <p>Custom fields store information specific to your business that is not covered by standard metadata.</p>
+        <table><thead><tr><th>Field idea</th><th>Suggested use</th><th>Example value</th></tr></thead><tbody>
+          <tr><td>Invoice total</td><td>Reporting and approval</td><td>LKR 125,000</td></tr>
+          <tr><td>Cost centre</td><td>Department allocation</td><td>Operations</td></tr>
+          <tr><td>Contract expiry</td><td>Renewal monitoring</td><td>2027-03-31</td></tr>
+          <tr><td>Approved</td><td>Simple workflow status</td><td>Yes</td></tr>
+          <tr><td>Vendor reference</td><td>External system lookup</td><td>SUP-8842</td></tr>
+        </tbody></table>
+        <p>Choose the correct data type so sorting and filtering behave properly. Avoid duplicating standard fields such as Correspondent or Date.</p>
+      </section>
+
+      <section id="saved-views">
+        <h2>9. Saved views</h2>
+        <p>A Saved View preserves a useful search/filter arrangement. It provides a repeatable working queue without moving or duplicating documents.</p>
+        <div class="example callout"><strong>Examples:</strong> “Unpaid invoices,” “Contracts expiring within 90 days,” “HR documents needing review,” or “Uploads with no document type.”</div>
+        <p>Give each view a task-focused name. Review shared views periodically so old business rules do not confuse users.</p>
+      </section>
+
+      <section id="workflows" class="page-break">
+        <h2>10. Workflows</h2>
+        <p>Workflows automate repeatable actions. They consist of triggers, optional conditions, and actions.</p>
+        <table><thead><tr><th>Part</th><th>Meaning</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Trigger</td><td>The event that starts evaluation.</td><td>A new document is consumed.</td></tr>
+          <tr><td>Condition</td><td>A rule that must match.</td><td>Content contains “INVOICE” and correspondent is Acme.</td></tr>
+          <tr><td>Action</td><td>The change Vaultly makes.</td><td>Assign type Invoice, tag Accounts Payable, and storage path Finance.</td></tr>
+        </tbody></table>
+        <h3>Safe workflow rollout</h3>
+        <ol class="steps"><li>Write down the intended rule in plain language.</li><li>Test against a few non-sensitive documents.</li><li>Check for false matches.</li><li>Enable the smallest necessary scope.</li><li>Monitor File Tasks and recently processed documents.</li></ol>
+        <div class="warning callout">A broad workflow can misclassify many documents quickly. Test conditions carefully before relying on automatic actions.</div>
+      </section>
+
+      <section id="mail">
+        <h2>11. Email intake</h2>
+        <p>Mail accounts and rules let authorized administrators import email attachments into Vaultly.</p>
+        <h3>Typical setup</h3>
+        <ol class="steps"><li>Use a dedicated mailbox such as invoices@company.example.</li><li>Connect it with the minimum required mailbox access.</li><li>Create rules for sender, subject, folder, or attachment behavior.</li><li>Test with one message.</li><li>Review processed mail and imported documents.</li></ol>
+        <div class="example callout"><strong>Example:</strong> Import PDF attachments from approved suppliers, assign the “Email Intake” tag, and route them to a finance review queue.</div>
+        <p>Processed-mail history helps explain why a message was imported, skipped, or failed.</p>
+      </section>
+
+      <section id="sharing">
+        <h2>12. Downloading, sending, and sharing</h2>
+        <p>Users with permission may download originals or archive versions. Some deployments also support email sending or temporary share links.</p>
+        <ul><li><strong>Original:</strong> the file exactly as uploaded.</li><li><strong>Archive version:</strong> a normalized or OCR-enhanced version produced during processing, when available.</li><li><strong>Share link:</strong> access without a normal Vaultly account, usually with an expiration. Treat it as sensitive.</li></ul>
+        <div class="warning callout">Before sharing, confirm the recipient, document permissions, confidential content, and link expiration. Revoke links that are no longer required.</div>
+      </section>
+
+      <section id="trash">
+        <h2>13. Trash</h2>
+        <p>Deleting a document normally moves it to Trash first. Authorized users may restore it or remove it permanently.</p>
+        <div class="example callout"><strong>Example:</strong> If an invoice is deleted accidentally, open Trash, verify the record, and restore it. Permanent deletion should follow your organization’s retention policy.</div>
+      </section>
+
+      <section id="settings">
+        <h2>14. Personal settings</h2>
+        <p>Settings generally affect the signed-in user rather than the whole deployment. Options may include appearance, language, date display, notifications, list behavior, and update preferences available to that account.</p>
+        <p>Personal settings are different from <strong>Application Configuration</strong>, which can affect everyone and is restricted to authorized administrators.</p>
+      </section>
+
+      <section id="users" class="page-break">
+        <h2>15. Users, groups, and permissions</h2>
+        <p>Every person should have an individual account. Groups make permissions consistent for job roles.</p>
+        <table><thead><tr><th>Permission</th><th>Allows</th><th>Example</th></tr></thead><tbody>
+          <tr><td>View</td><td>Read or list a resource.</td><td>Finance users can view invoices.</td></tr>
+          <tr><td>Add</td><td>Create a resource.</td><td>Records staff can create tags.</td></tr>
+          <tr><td>Change</td><td>Edit a resource.</td><td>HR managers can update employee record metadata.</td></tr>
+          <tr><td>Delete</td><td>Move to trash or remove, depending on the resource.</td><td>Limited to records administrators.</td></tr>
+        </tbody></table>
+        <h3>Global and object permissions</h3>
+        <p>Global permissions grant access to a resource type. Object permissions restrict or grant access to particular documents or metadata objects. Ownership may also affect access.</p>
+        <h3>Suggested small-business roles</h3>
+        <ul><li><strong>Vaultly Administrator:</strong> deployment configuration, users, diagnostics, and recovery.</li><li><strong>Records Manager:</strong> metadata design, workflows, and controlled deletion.</li><li><strong>Department User:</strong> upload, view, and edit permitted department documents.</li><li><strong>Read-only Auditor:</strong> view approved records without changing them.</li></ul>
+        <div class="warning callout"><strong>Least privilege:</strong> do not make routine users administrators. Test a role using a non-admin account before onboarding a team.</div>
+      </section>
+
+      <section id="configuration">
+        <h2>16. Application configuration</h2>
+        <p>Configuration options affect the deployment and are intended for trusted administrators.</p>
+        <h3>OCR settings</h3><p>Control language selection, OCR mode, page rotation, deskewing, image limits, and related processing behavior. Incorrect settings may reduce search quality or increase processing time.</p>
+        <h3>Barcode settings</h3><p>Enable supported barcode detection and document separation behavior. Test with representative scans before applying it to bulk intake.</p>
+        <h3>Environment-managed settings</h3><p>Some foundational settings are defined in the VM’s private <code>.env</code> file and require container recreation. Never place real secrets in Git or screenshots.</p>
+        <div class="example callout"><strong>Example:</strong> Sinhala, Tamil, Chinese, and English OCR require the matching language identifiers and installed language packages. Change languages only after confirming deployment support.</div>
+      </section>
+
+      <section id="operations">
+        <h2>17. File Tasks, Logs, System Status, and Django Admin</h2>
+        <table><thead><tr><th>Tool</th><th>Purpose</th><th>When to use it</th></tr></thead><tbody>
+          <tr><td>File Tasks</td><td>Shows consumption jobs, status, and failures.</td><td>An upload does not appear or OCR fails.</td></tr>
+          <tr><td>Logs</td><td>Displays application events and error details.</td><td>An administrator needs technical evidence.</td></tr>
+          <tr><td>System Status</td><td>Summarizes application, storage, database, and service health.</td><td>Routine health checks or incident diagnosis.</td></tr>
+          <tr><td>Vaultly Admin</td><td>Low-level administration of database-backed application models.</td><td>Only when a documented admin task requires it.</td></tr>
+        </tbody></table>
+        <div class="warning callout"><strong>Vaultly Admin is powerful.</strong> Changes can bypass normal interface safeguards. Use the standard Vaultly interface whenever possible and take a backup before risky administrative work.</div>
+      </section>
+
+      <section id="daily-examples" class="page-break">
+        <h2>18. Practical business examples</h2>
+        <h3>Accounts payable</h3>
+        <ol class="steps"><li>Upload or email the supplier invoice.</li><li>Verify OCR, supplier, invoice date, and total.</li><li>Assign Invoice and Accounts Payable metadata.</li><li>Add an approval status custom field or tag.</li><li>Use a Saved View for invoices awaiting approval.</li><li>Mark Paid after settlement while retaining the record.</li></ol>
+        <h3>Contract renewal</h3>
+        <ol class="steps"><li>Upload the signed contract.</li><li>Assign correspondent and Contract type.</li><li>Add expiry date and responsible department custom fields.</li><li>Create a Saved View for upcoming expirations.</li><li>Use a workflow to tag contracts that match the department’s rule.</li></ol>
+        <h3>Employee records</h3>
+        <ol class="steps"><li>Create an HR group with limited permissions.</li><li>Restrict employee documents to that group.</li><li>Use consistent document types such as Agreement, Review, and Certificate.</li><li>Never use broad public share links for sensitive HR material.</li></ol>
+        <h3>Audit request</h3>
+        <ol class="steps"><li>Create a read-only auditor account or group.</li><li>Grant access only to the required records.</li><li>Create a Saved View for the audit scope.</li><li>Remove or expire access after the engagement.</li></ol>
+      </section>
+
+      <section id="security">
+        <h2>19. Security, retention, and backups</h2>
+        <ul><li>Use strong unique passwords and individual accounts.</li><li>Restrict administrator access.</li><li>Review groups and permissions regularly.</li><li>Keep the Ubuntu VM, Docker Engine, and Vaultly image updated through a tested process.</li><li>Protect the VM-only <code>.env</code> file and never commit it.</li><li>Define retention and permanent-deletion rules.</li><li>Keep recoverable backups outside the VM.</li></ul>
+        <h3>What to back up</h3>
+        <p>A complete recovery plan needs the PostgreSQL database, document media, application data, export/consume requirements, deployment configuration, and secrets needed to recreate the service.</p>
+        <div class="warning callout"><strong>A VirtualBox snapshot is useful but is not a complete backup strategy.</strong> Keep a separate backup on different storage and test restoration.</div>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>20. Troubleshooting</h2>
+        <table><thead><tr><th>Problem</th><th>Checks</th><th>Next action</th></tr></thead><tbody>
+          <tr><td>Vaultly does not open</td><td>Confirm the VM is running, its IP address is current, and containers are healthy.</td><td>Administrator runs <code>docker compose ps</code> and reviews logs.</td></tr>
+          <tr><td>Document not searchable</td><td>Wait for processing, inspect Content, confirm OCR language.</td><td>Review File Tasks and rescan if quality is poor.</td></tr>
+          <tr><td>Upload missing</td><td>Check supported format, file size, and task status.</td><td>Retry once, then capture the relevant error.</td></tr>
+          <tr><td>Wrong metadata assigned</td><td>Check matching rules and workflows.</td><td>Correct the record and narrow the automation.</td></tr>
+          <tr><td>User cannot see a document</td><td>Review user, group, global, owner, and object permissions.</td><td>Grant only the specific access required.</td></tr>
+          <tr><td>Guide link fails</td><td>Open <code>/static/vaultly-docs/index.html</code> directly.</td><td>Confirm the custom image is current and healthy.</td></tr>
+        </tbody></table>
+        <h3>Useful VM health commands</h3>
+        <p><code>docker compose ps</code> shows service health. <code>docker compose logs --tail=100 webserver</code> shows recent application output. Avoid destructive Docker volume commands during diagnosis.</p>
+      </section>
+
+      <section id="glossary">
+        <h2>21. Glossary</h2>
+        <table><tbody>
+          <tr><th>Archive version</th><td>A normalized or OCR-enhanced derivative retained alongside the original when processing creates one.</td></tr>
+          <tr><th>Consume</th><td>The process of importing and processing a new file.</td></tr>
+          <tr><th>Correspondent</th><td>A person or organization associated with a document.</td></tr>
+          <tr><th>Metadata</th><td>Structured information describing a document.</td></tr>
+          <tr><th>OCR</th><td>Optical Character Recognition: conversion of visible text into searchable text.</td></tr>
+          <tr><th>Saved View</th><td>A reusable saved search/filter arrangement.</td></tr>
+          <tr><th>Storage path</th><td>A managed rule for archive naming and organization.</td></tr>
+          <tr><th>Workflow</th><td>Trigger, conditions, and actions used to automate processing.</td></tr>
+        </tbody></table>
+      </section>
+
+      <section id="legal">
+        <h2>22. About and licenses</h2>
+        <p>Vaultly is a customized self-hosted document management experience. Its software foundation includes Paperless-ngx and other open-source components distributed under their respective licenses. Source notices and license obligations remain available in the project repository and image.</p>
+        <footer>Vaultly User Guide · Detailed edition · Interface revision 2.20.15 · Generated for the Vaultly deployment</footer>
+      </section>
     </main>
   </div>
 </body>
