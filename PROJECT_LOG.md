@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled and runs healthy `vaultly-paperless:2.20.15-frontend4`. Local revision `frontend5` adds a built-in Vaultly User Guide, redirects contextual and global help to it, and removes the public tour and version/update footer.
+- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend5` in approximately 153 seconds. It adds a built-in Vaultly User Guide, redirects contextual and global help to it, and removes the public tour and version/update footer.
 - **Pushed:** `origin/main` includes the validated `frontend5` Vaultly guide and interface cleanup through commit `f25d075`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `vaultly-paperless:2.20.15-frontend4`, reports healthy, and serves port `8000`. Persistent services and volumes remain intact.
-- **Next:** Pull and build `frontend5` on the VM, then deploy and verify the Vaultly guide and simplified user interface.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. PostgreSQL, Redis, Tika, and Gotenberg remain running; the webserver is intentionally stopped after the successful `frontend5` build. Persistent services and volumes remain intact.
+- **Next:** Start the webserver from `frontend5`, confirm health, then verify the Vaultly guide and simplified user interface.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend5 image built on VM
+
+- Fast-forwarded the VM checkout through publication commit `2e2a73f`.
+- Gracefully stopped only the webserver and successfully built `vaultly-paperless:2.20.15-frontend5` in approximately 153 seconds.
+- The build included the compiled Vaultly interface and local User Guide; PostgreSQL, Redis, Tika, Gotenberg, and persistent volumes remained intact.
+- Reason: compile the self-contained help experience before replacing the running webserver.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend5 published
 
