@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled and runs `vaultly-paperless:2.20.15-frontend2`. A local `frontend3` patch now hides the Application Logo and Application Title controls and removes the resulting empty General Settings tab while retaining OCR and Barcode configuration.
-- **Pushed:** `origin/main` includes the `frontend3` configuration-screen branding lock in commit `c93f59c`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running on healthy `frontend2`. Login and authenticated views show the Vaultly favicon/title/wordmark/header with no feather or byline. The administrator `Rasanga926` can sign in, and the dashboard retains one document with 74 indexed characters.
-- **Next:** Validate, commit, and push `frontend3`; build and deploy it on the VM, then verify the Configuration screen and recheck the retained OCR document content.
+- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend3` in 141 seconds. It retains complete Vaultly branding and hides the Application Logo/Application Title controls and empty General Settings tab while preserving OCR and Barcode configuration.
+- **Pushed:** `origin/main` includes the `frontend3` implementation and publication record through commit `4494806`. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. The prior `frontend2` webserver is intentionally stopped after a graceful shutdown for the build; PostgreSQL, Redis, Tika, Gotenberg, and persistent volumes remain intact.
+- **Next:** Recreate only the webserver from `frontend3`, confirm health, then verify the Configuration screen and retained OCR document content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend3 image built on VM
+
+- Fast-forwarded the VM checkout through commit `4494806`.
+- Gracefully stopped only the webserver and successfully built `vaultly-paperless:2.20.15-frontend3` in approximately 141 seconds.
+- PostgreSQL, Redis, Tika, Gotenberg, and all persistent volumes were left intact.
+- Reason: compile the fixed-branding Configuration UI before changing the running application.
 
 ### 2026-07-25 — Phase 1, Step 7: branding-control lock published
 
