@@ -3,11 +3,16 @@
 ## Current State
 
 - **Built:** The VM successfully compiled and runs healthy `vaultly-paperless:2.20.15-frontend5`. Local revision `frontend6` additionally changes the Django administration header, browser title, and dashboard heading to Vaultly.
-- **Pushed:** `origin/main` includes the healthy `frontend5` runtime record through commit `10aca16`. The validated `frontend6` Django Admin branding is not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the validated `frontend6` Django Admin branding through commit `0795e31`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `vaultly-paperless:2.20.15-frontend5`, reports healthy, and serves port `8000`. Persistent services and volumes remain intact.
-- **Next:** Commit and push `frontend6`, then build, deploy, and verify the Vaultly-branded Django administration interface.
+- **Next:** Pull and build `frontend6` on the VM, then deploy and verify the Vaultly-branded Django administration interface.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend6 published
+
+- Committed and pushed the Vaultly Django administration branding as `0795e31`.
+- Reason: make the validated custom image revision available for the user's VM build and verification.
 
 ### 2026-07-25 — Phase 1, Step 7: Django Admin branding prepared locally
 
