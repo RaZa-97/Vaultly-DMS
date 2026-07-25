@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** The VM successfully compiled and is running custom image `vaultly-paperless:2.20.15-frontend1`. Visual verification found that its Angular header patch is present, but the login byline, tab title, and root favicon also require narrowly patched Django backend files; revision `frontend2` is prepared locally to cover them.
-- **Pushed:** `origin/main` includes the first custom image and healthy-runtime record through commit `be9eb2b`. The `frontend2` correction is not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the verified `frontend2` login-title, byline, and favicon correction in commit `8c40bdb`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `frontend1`, reports healthy, and listens on port `8000`. The login screen still shows the upstream byline, tab title, and favicon.
 - **Next:** Validate, commit, and push `frontend2`; rebuild it on the VM, recreate only the webserver, then repeat visual and retained-data checks.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: complete login branding correction published
+
+- Created and pushed commit `8c40bdb` (`fix: complete Vaultly login branding`) to private `origin/main`.
+- The combined Angular/backend patch applies cleanly to the exact pinned upstream source, Git's whitespace validation passes, and no secret-like values were found.
+- Reason: publish the corrected image revision before the VM rebuild and second browser verification.
 
 ### 2026-07-25 — Phase 1, Step 7: login branding gap corrected locally
 
