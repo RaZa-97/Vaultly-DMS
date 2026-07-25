@@ -4,10 +4,17 @@
 
 - **Built:** The VM successfully compiled corrected custom image `vaultly-paperless:2.20.15-frontend2` in 137 seconds. It includes the Angular branding plus narrowly patched Django login/title/favicon files.
 - **Pushed:** `origin/main` includes the verified `frontend2` correction and successful-build record through commit `9827544`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses `vaultly-paperless:2.20.15-frontend2`, reports healthy, and serves port `8000`. Persistent services and volumes remained intact.
-- **Next:** Repeat the uncached login/title/favicon check, then confirm the existing document and OCR search result survived.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses healthy `frontend2`. An uncached browser check confirms the Vaultly login title, dial favicon, and wordmark render with no Paperless byline.
+- **Next:** Sign in and confirm the existing smoke-test document, OCR text, search result, and authenticated header survived the custom webserver replacement.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: complete Vaultly login branding verified
+
+- Opened the login route in a newly created private browser session to exclude cached HTML and icons.
+- Confirmed the tab title is `Vaultly sign in`, the tab displays the indigo/teal Vaultly dial favicon, and the login page displays the Vaultly wordmark.
+- Confirmed the “BY PAPERLESS-NGX” byline and upstream green feather are absent.
+- Reason: verify the corrected backend-rendered branding end to end before retained-data testing.
 
 ### 2026-07-25 — Phase 1, Step 7: corrected frontend2 webserver healthy
 
