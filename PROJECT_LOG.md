@@ -4,10 +4,17 @@
 
 - **Built:** The VM successfully compiled corrected custom image `vaultly-paperless:2.20.15-frontend2` in 137 seconds. It includes the Angular branding plus narrowly patched Django login/title/favicon files.
 - **Pushed:** `origin/main` includes the verified `frontend2` correction and successful-build record through commit `9827544`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses healthy `frontend2`. An uncached browser check confirms the Vaultly login title, dial favicon, and wordmark render with no Paperless byline.
-- **Next:** Sign in and confirm the existing smoke-test document, OCR text, search result, and authenticated header survived the custom webserver replacement.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running on healthy `frontend2`. Login and authenticated views show the Vaultly favicon/title/wordmark/header with no feather or byline. The administrator `Rasanga926` can sign in, and the dashboard retains one document with 74 indexed characters.
+- **Next:** Search for the unique OCR phrase and open the existing smoke-test document to confirm its extracted text survived.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: authenticated branding and retained counts verified
+
+- Signed in successfully as administrator `Rasanga926`.
+- Confirmed the authenticated tab title and header use Vaultly branding with no upstream feather or byline.
+- Confirmed the dashboard still reports one document and 74 indexed characters after both custom webserver replacements.
+- Reason: verify authentication, custom Angular header behavior, and persistent database/index retention before the final content search.
 
 ### 2026-07-25 — Phase 1, Step 7: complete Vaultly login branding verified
 
