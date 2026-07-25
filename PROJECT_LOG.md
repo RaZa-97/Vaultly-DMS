@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** The VM successfully compiled corrected custom image `vaultly-paperless:2.20.15-frontend2` in 137 seconds. It includes the Angular branding plus narrowly patched Django login/title/favicon files.
-- **Pushed:** `origin/main` includes the verified `frontend2` login-title, byline, and favicon correction in commit `8c40bdb`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. The existing `frontend1` webserver container is intentionally stopped after a graceful shutdown to free memory for the successful build; PostgreSQL, Redis, Tika, Gotenberg, and persistent volumes remain intact.
-- **Next:** Recreate only the stopped webserver from `frontend2`, confirm health, then repeat visual and retained-data checks.
+- **Pushed:** `origin/main` includes the verified `frontend2` correction and successful-build record through commit `9827544`. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses `vaultly-paperless:2.20.15-frontend2`, reports healthy, and serves port `8000`. Persistent services and volumes remained intact.
+- **Next:** Repeat the uncached login/title/favicon check, then confirm the existing document and OCR search result survived.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: corrected frontend2 webserver healthy
+
+- Recreated only `vaultly-webserver-1` from `vaultly-paperless:2.20.15-frontend2`.
+- Confirmed the custom webserver reports healthy and publishes port `8000`; PostgreSQL, Redis, Tika, and Gotenberg remained running.
+- Reason: verify the corrected runtime before repeating browser and retained-data checks.
 
 ### 2026-07-25 — Phase 1, Step 7: corrected frontend2 image built
 
