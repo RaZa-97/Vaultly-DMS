@@ -2,12 +2,21 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend3` in 141 seconds. It retains complete Vaultly branding and hides the Application Logo/Application Title controls and empty General Settings tab while preserving OCR and Barcode configuration.
-- **Pushed:** `origin/main` includes the `frontend3` implementation and successful-build record through commit `c445bca`. No VM secret or local credential file is stored in Git.
+- **Built:** The VM successfully compiled and runs `vaultly-paperless:2.20.15-frontend3`. Local revision `frontend4` removes the global documentation entries and shared page-header help links and changes both application and login primary colors to Vaultly indigo `#4338CA`.
+- **Pushed:** `origin/main` includes the healthy `frontend3` record through commit `882dacc`. The `frontend4` documentation/theme change is not yet committed or pushed. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses `vaultly-paperless:2.20.15-frontend3`, reports healthy, and serves port `8000`. Persistent services and volumes remained intact.
-- **Next:** Verify the Configuration screen omits General Settings and both branding controls while retaining OCR and Barcode settings, then recheck the OCR document content.
+- **Next:** Validate, commit, and push `frontend4`; build and deploy it on the VM, then verify the documentation links, indigo theme, configuration lock, and retained OCR content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: documentation and indigo theme prepared locally
+
+- User requested removal of the global Documentation links shown in the sidebar and profile menu, plus shared page-header help/documentation icons.
+- Removed those shared UI elements centrally while leaving functional field hints and upstream license/source material intact.
+- Changed the Angular light/dark primary theme and browser theme-color fallback to Vaultly indigo `#4338CA`.
+- Changed the backend login/account stylesheet to the same indigo, with darker indigo hover and active states.
+- Prepared image revision `vaultly-paperless:2.20.15-frontend4`.
+- Reason: finish the user-facing Vaultly identity with a consistent blue-indigo interface and no upstream documentation navigation.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend3 webserver healthy
 

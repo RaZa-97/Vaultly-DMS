@@ -51,6 +51,9 @@ COPY --from=source --chown=paperless:paperless \
 COPY --from=source --chown=paperless:paperless \
   /source/src/paperless/static/paperless/img/vaultly-favicon.svg \
   /usr/src/paperless/src/paperless/static/paperless/img/vaultly-favicon.svg
+COPY --from=source --chown=paperless:paperless \
+  /source/src/documents/static/base.css \
+  /usr/src/paperless/src/documents/static/base.css
 
 RUN cd /usr/src/paperless/src \
     && s6-setuidgid paperless python3 manage.py collectstatic --clear --no-input --link

@@ -184,3 +184,104 @@ diff --git a/src-ui/src/app/components/admin/config/config.component.ts b/src-ui
 +        !this.hiddenConfigKeys.has(option.key)
 +    )
    }
+diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-ui/src/app/components/app-frame/app-frame.component.html
+--- a/src-ui/src/app/components/app-frame/app-frame.component.html
++++ b/src-ui/src/app/components/app-frame/app-frame.component.html
+@@ -53,10 +53,5 @@
+         <a ngbDropdownItem class="nav-link d-flex" href="accounts/logout/" (click)="onLogout()">
+           <i-bs class="me-2" name="door-open"></i-bs><ng-container i18n>Logout</ng-container>
+         </a>
+-        <div class="dropdown-divider"></div>
+-        <a ngbDropdownItem class="nav-link" target="_blank" rel="noopener noreferrer"
+-          href="https://docs.paperless-ngx.com">
+-          <i-bs class="me-2" name="question-circle"></i-bs><ng-container i18n>Documentation</ng-container>
+-        </a>
+       </div>
+     </li>
+@@ -294,14 +292,6 @@
+                 </a>
+               </li>
+             }
+-            <li class="nav-item mt-2" tourAnchor="tour.outro">
+-              <a class="px-3 py-2 text-muted small d-flex align-items-center flex-wrap text-decoration-none"
+-                target="_blank" rel="noopener noreferrer" href="https://docs.paperless-ngx.com" ngbPopover="Documentation"
+-                i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end" container="body"
+-                triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+-                <i-bs class="d-flex" name="question-circle"></i-bs><span class="ms-1">&nbsp;<ng-container i18n>Documentation</ng-container></span>
+-              </a>
+-            </li>
+             <li class="nav-item" [class.visually-hidden]="slimSidebarEnabled">
+               <div class="px-3 py-0 text-muted small d-flex align-items-center flex-wrap">
+                 <div class="me-3">
+diff --git a/src-ui/src/app/components/common/page-header/page-header.component.html b/src-ui/src/app/components/common/page-header/page-header.component.html
+--- a/src-ui/src/app/components/common/page-header/page-header.component.html
++++ b/src-ui/src/app/components/common/page-header/page-header.component.html
+@@ -5,17 +5,5 @@
+       @if (subTitle) {
+         <span class="h6 mb-0 d-block d-md-inline fw-normal ms-md-3 text-truncate" style="line-height: 1.4">{{subTitle}}</span>
+       }
+-      @if (info) {
+-        <button class="btn btn-sm btn-link text-muted me-auto p-0 p-md-2" title="What's this?" i18n-title type="button" [ngbPopover]="infoPopover" [autoClose]="true">
+-          <i-bs name="question-circle"></i-bs>
+-        </button>
+-        <ng-template #infoPopover>
+-          <p [class.mb-0]="!infoLink" [innerHTML]="info"></p>
+-          @if (infoLink) {
+-            <a href="https://docs.paperless-ngx.com/{{infoLink}}" target="_blank" referrerpolicy="noopener noreferrer" i18n>Read more</a>
+-            <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
+-          }
+-        </ng-template>
+-      }
+     </h3>
+   </div>
+diff --git a/src-ui/src/app/data/ui-settings.ts b/src-ui/src/app/data/ui-settings.ts
+--- a/src-ui/src/app/data/ui-settings.ts
++++ b/src-ui/src/app/data/ui-settings.ts
+@@ -15,6 +15,6 @@
+   TITLE_CONTENT = 'title-content',
+ }
+ 
+-export const PAPERLESS_GREEN_HEX = '#17541f'
++export const PAPERLESS_GREEN_HEX = '#4338CA'
+ 
+ export const SETTINGS_KEYS = {
+diff --git a/src-ui/src/theme.scss b/src-ui/src/theme.scss
+--- a/src-ui/src/theme.scss
++++ b/src-ui/src/theme.scss
+@@ -1,8 +1,8 @@
+ @use "sass:color";
+ @mixin paperless-green {
+-  // base color e.g. #17541f = hsl(128, 57%, 21%)
+-  --pngx-primary: 128, 57%;
+-  --pngx-primary-lightness: 21%;
++  // Vaultly brand indigo #4338CA = hsl(245, 65%, 51%)
++  --pngx-primary: 245, 65%;
++  --pngx-primary-lightness: 51%;
+ }
+ 
+ :root {
+@@ -67,6 +67,6 @@
+ 
+ // Dark mode
+ @mixin paperless-green-dark-mode {
+-  --pngx-primary-lightness: 31%;
++  --pngx-primary-lightness: 61%;
+   --bs-primary: hsl(var(--pngx-primary),var(--pngx-primary-lightness));
+ }
+diff --git a/src/documents/static/base.css b/src/documents/static/base.css
+--- a/src/documents/static/base.css
++++ b/src/documents/static/base.css
+@@ -1,8 +1,8 @@
+ body {
+   --bs-body-bg: #f5f5f5;
+-  --bs-link-color-rgb: 23, 84, 31; /* #17541f */
+-  --bs-link-hover-color-rgb: 15, 56, 20;
+-  --pngx-primary: #17541f;
+-  --pngx-primary-hover: #0f3614;
+-  --pngx-primary-active: #0c2c10;
++  --bs-link-color-rgb: 67, 56, 202; /* #4338CA */
++  --bs-link-hover-color-rgb: 55, 48, 163;
++  --pngx-primary: #4338CA;
++  --pngx-primary-hover: #3730A3;
++  --pngx-primary-active: #312E81;
+ }
