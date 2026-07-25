@@ -2,12 +2,20 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled and is running custom image `vaultly-paperless:2.20.15-frontend1`. Visual verification found that its Angular header patch is present, but the login byline, tab title, and root favicon also require narrowly patched Django backend files; revision `frontend2` is prepared locally to cover them.
+- **Built:** The VM successfully compiled corrected custom image `vaultly-paperless:2.20.15-frontend2` in 137 seconds. It includes the Angular branding plus narrowly patched Django login/title/favicon files.
 - **Pushed:** `origin/main` includes the verified `frontend2` login-title, byline, and favicon correction in commit `8c40bdb`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `frontend1`, reports healthy, and listens on port `8000`. The login screen still shows the upstream byline, tab title, and favicon.
-- **Next:** Validate, commit, and push `frontend2`; rebuild it on the VM, recreate only the webserver, then repeat visual and retained-data checks.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. The existing `frontend1` webserver container is intentionally stopped after a graceful shutdown to free memory for the successful build; PostgreSQL, Redis, Tika, Gotenberg, and persistent volumes remain intact.
+- **Next:** Recreate only the stopped webserver from `frontend2`, confirm health, then repeat visual and retained-data checks.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: corrected frontend2 image built
+
+- Fast-forwarded the VM checkout through commit `7885ac3`.
+- Gracefully stopped only the existing webserver to free memory, then successfully built `vaultly-paperless:2.20.15-frontend2` in approximately 137 seconds.
+- PostgreSQL, Redis, Tika, Gotenberg, and all persistent volumes were left intact.
+- The lower-memory workflow avoided the severe desktop unresponsiveness seen during the first build.
+- Reason: compile the complete login/title/favicon correction before replacing the healthy fallback container.
 
 ### 2026-07-25 — Phase 1, Step 7: complete login branding correction published
 
