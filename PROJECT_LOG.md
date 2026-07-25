@@ -5,9 +5,15 @@
 - **Built:** The VM successfully compiled corrected custom image `vaultly-paperless:2.20.15-frontend2` in 137 seconds. It includes the Angular branding plus narrowly patched Django login/title/favicon files.
 - **Pushed:** `origin/main` includes the verified `frontend2` correction and successful-build record through commit `9827544`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running on healthy `frontend2`. Login and authenticated views show the Vaultly favicon/title/wordmark/header with no feather or byline. The administrator `Rasanga926` can sign in, and the dashboard retains one document with 74 indexed characters.
-- **Next:** Search for the unique OCR phrase and open the existing smoke-test document to confirm its extracted text survived.
+- **Next:** Open the returned `vaultly-ocr-test` result and inspect its Content tab to confirm the stored extracted text survived; then record the Phase 1 checkpoint.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: retained OCR search verified
+
+- Searched the healthy `frontend2` instance for the unique phrase `Silver Elephant 926`.
+- Confirmed the search immediately returns the existing `vaultly-ocr-test` document.
+- Reason: prove the database-backed document metadata and OCR search index survived the custom image build and both webserver replacements.
 
 ### 2026-07-25 — Phase 1, Step 7: authenticated branding and retained counts verified
 
