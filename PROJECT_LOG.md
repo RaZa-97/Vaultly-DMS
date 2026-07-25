@@ -3,11 +3,16 @@
 ## Current State
 
 - **Built:** The VM successfully compiled and runs healthy `vaultly-paperless:2.20.15-frontend4`. Local revision `frontend5` adds a built-in Vaultly User Guide, redirects contextual and global help to it, and removes the public tour and version/update footer.
-- **Pushed:** `origin/main` includes the `frontend4` implementation and VM build record through commit `98d866e`. The `frontend5` guide revision is validated locally but not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the validated `frontend5` Vaultly guide and interface cleanup through commit `f25d075`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `vaultly-paperless:2.20.15-frontend4`, reports healthy, and serves port `8000`. Persistent services and volumes remain intact.
-- **Next:** Commit and push `frontend5`, then build, deploy, and verify the Vaultly guide and simplified user interface on the VM.
+- **Next:** Pull and build `frontend5` on the VM, then deploy and verify the Vaultly guide and simplified user interface.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend5 published
+
+- Committed and pushed the built-in Vaultly User Guide and interface cleanup as `f25d075`.
+- Reason: make the validated custom image revision available for the user's VM build and verification.
 
 ### 2026-07-25 — Phase 1, Step 7: Vaultly guide and frontend5 prepared locally
 
