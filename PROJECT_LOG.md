@@ -2,12 +2,21 @@
 
 ## Current State
 
-- **Built:** Version-pinned Paperless-ngx stack plus validated Vaultly primary/dark SVG wordmarks and favicons; the deployed VM has passed upload, preview, OCR, indexing, and search smoke tests. The supported Vaultly title/logo integration is working.
-- **Pushed:** `origin/main` includes the Step 7 SVG branding, corrected read-only static-route mounts, and custom-frontend handoff through commit `0bca2f7`, plus credential-file protection. No VM secret or local credential file is stored in Git.
+- **Built:** A version-pinned custom frontend image definition now applies a narrow Vaultly branding patch to the exact Paperless-ngx `2.20.15` source revision. The deployed VM has already passed upload, preview, OCR, indexing, and search smoke tests on the official runtime.
+- **Pushed:** `origin/main` currently ends at commit `6d8bd74`. The custom frontend Dockerfile, patch, and Compose build wiring are prepared locally but are not yet committed or pushed. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are Up, the webserver is healthy, the test document remains searchable, and the primary Vaultly vault-dial logo displays. Paperless's hard-coded top-left feather, browser favicon, “BY PAPERLESS-NGX,” and some attribution remain.
-- **Next:** Resume Step 7 by creating a version-pinned custom Vaultly frontend/container image based on Paperless-ngx `2.20.15`, removing the remaining Paperless visual attribution, replacing the favicon, documenting the upgrade-maintenance workflow, and testing without risking persistent volumes.
+- **Next:** Validate the complete Docker build definition, commit and push it, then build and recreate only the webserver on the VM without touching persistent volumes.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: custom frontend image prepared
+
+- Added `Dockerfile.vaultly`, which clones Paperless-ngx tag `v2.20.15`, verifies upstream commit `05e48b23166df7c7afe6f329b460b0511a89496c`, builds with pinned pnpm `10.17.1`, and retains the official `2.20.15` runtime.
+- Added and validated a narrow frontend patch that removes the hard-coded header feather and byline, changes browser/installable-app identity to Vaultly, and packages the Vaultly SVG favicon.
+- Wired only the Compose `webserver` service to build the custom image; PostgreSQL, Redis, Tika, Gotenberg, volumes, and secrets remain unchanged.
+- Added `.dockerignore` and documented the required patch-refresh and smoke-test process for every future Paperless upgrade.
+- Preserved the upstream GPL license, copyright notices, image labels, and documentation.
+- Reason: remove the remaining user-facing Paperless branding while keeping the customization explicit, pinned, reviewable, and safe for persistent data.
 
 ### 2026-07-23 — Phase 1, Step 7: custom frontend handoff published
 

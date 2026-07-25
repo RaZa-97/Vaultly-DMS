@@ -20,7 +20,10 @@ services:
       POSTGRES_PASSWORD: ${PAPERLESS_DBPASS}
 
   webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.20.15
+    build:
+      context: .
+      dockerfile: Dockerfile.vaultly
+    image: vaultly-paperless:2.20.15-frontend1
     restart: unless-stopped
     depends_on:
       - db

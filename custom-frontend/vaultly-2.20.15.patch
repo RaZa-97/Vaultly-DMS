@@ -1,0 +1,95 @@
+diff --git a/src-ui/angular.json b/src-ui/angular.json
+--- a/src-ui/angular.json
++++ b/src-ui/angular.json
+@@ -70,8 +70,7 @@
+             "tsConfig": "tsconfig.app.json",
+             "localize": true,
+             "assets": [
+-              "src/favicon.ico",
+-              "src/apple-touch-icon.png",
++              "src/vaultly-favicon.svg",
+               "src/assets",
+               "src/manifest.webmanifest",
+               {
+@@ -156,8 +155,7 @@
+           "options": {
+             "tsConfig": "tsconfig.spec.json",
+             "assets": [
+-              "src/favicon.ico",
+-              "src/apple-touch-icon.png",
++              "src/vaultly-favicon.svg",
+               "src/assets",
+               "src/manifest.webmanifest"
+             ],
+diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-ui/src/app/components/app-frame/app-frame.component.html
+--- a/src-ui/src/app/components/app-frame/app-frame.component.html
++++ b/src-ui/src/app/components/app-frame/app-frame.component.html
+@@ -7,19 +7,13 @@
+     [ngClass]="{ 'slim': slimSidebarEnabled, 'col-auto col-md-3 col-lg-2 col-xxxl-1' : !slimSidebarEnabled, 'py-3' : !customAppTitle?.length || slimSidebarEnabled, 'py-2': customAppTitle?.length }"
+     routerLink="/dashboard"
+     tourAnchor="tour.intro">
+-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 198.43 238.91" width="1em" height="1.5em" fill="currentColor">
+-      <path
+-        d="M194.7,0C164.22,70.94,17.64,79.74,64.55,194.06c.58,1.47-10.85,17-18.47,29.9-1.76-6.45-3.81-13.48-3.52-14.07,38.11-45.14-27.26-70.65-30.78-107.58C-4.64,131.62-10.5,182.92,39,212.53c.3,0,2.64,11.14,3.81,16.71a58.55,58.55,0,0,0-2.93,6.45c-1.17,2.93,7.62,2.64,7.62,3.22.88-.29,21.7-36.93,22.28-37.23C187.67,174.72,208.48,68.6,194.7,0ZM134.61,74.75C79.5,124,70.12,160.64,71.88,178.53,53.41,134.85,107.64,86.77,134.61,74.75ZM28.2,145.11c10.55,9.67,28.14,39.28,13.19,56.57C44.91,193.77,46.08,175.89,28.2,145.11Z"
+-        transform="translate(0 0)" />
+-    </svg>
+-    <div class="ms-2 ms-md-3 d-inline-block" [class.d-md-none]="slimSidebarEnabled">
++    <div class="d-inline-block" [class.d-md-none]="slimSidebarEnabled">
+       @if (customAppTitle?.length) {
+         <div class="d-flex flex-column align-items-start custom-title">
+           <span class="title">{{customAppTitle}}</span>
+-          <span class="byline text-uppercase font-monospace" i18n>by Paperless-ngx</span>
+         </div>
+       } @else {
+-        Paperless-ngx
++        Vaultly
+       }
+     </div>
+   </a>
+diff --git a/src-ui/src/index.html b/src-ui/src/index.html
+--- a/src-ui/src/index.html
++++ b/src-ui/src/index.html
+@@ -2,13 +2,12 @@
+ <html lang="en" data-bs-theme="auto">
+ <head>
+   <meta charset="utf-8">
+-  <title>Paperless-ngx</title>
++  <title>Vaultly</title>
+   <base href="/">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="color-scheme" content="dark light">
+-  <meta name="theme-color" content="#17541f" />
++  <meta name="theme-color" content="#4338CA" />
+   <link rel="manifest" href="manifest.webmanifest">
+-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
++  <link rel="icon" type="image/svg+xml" href="vaultly-favicon.svg">
+ </head>
+ <body>
+   <pngx-root></pngx-root>
+diff --git a/src-ui/src/manifest.webmanifest b/src-ui/src/manifest.webmanifest
+--- a/src-ui/src/manifest.webmanifest
++++ b/src-ui/src/manifest.webmanifest
+@@ -1,18 +1,14 @@
+ {
+   "background_color": "white",
+-  "description": "A supercharged version of paperless: scan, index and archive all your physical documents",
++  "description": "Vaultly document management system",
+   "display": "standalone",
+   "icons": [
+     {
+-      "src": "favicon.ico",
+-      "sizes": "256x256"
+-    },
+-    {
+-      "src": "assets/logo-notext.svg",
++      "src": "vaultly-favicon.svg",
+       "sizes": "any"
+     }
+   ],
+-  "name": "Paperless-ngx",
+-  "short_name": "Paperless-ngx",
++  "name": "Vaultly",
++  "short_name": "Vaultly",
+   "start_url": "/"
+ }

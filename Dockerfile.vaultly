@@ -1,0 +1,41 @@
+# syntax=docker/dockerfile:1
+
+# Build against the exact Paperless-ngx source revision used by the runtime.
+FROM docker.io/alpine:3.22.2 AS source
+
+RUN apk add --no-cache git
+
+ARG PAPERLESS_TAG=v2.20.15
+ARG PAPERLESS_COMMIT=05e48b23166df7c7afe6f329b460b0511a89496c
+
+RUN git clone --depth 1 --branch "${PAPERLESS_TAG}" \
+      https://github.com/paperless-ngx/paperless-ngx.git /source \
+    && test "$(git -C /source rev-parse HEAD)" = "${PAPERLESS_COMMIT}"
+
+COPY custom-frontend/vaultly-2.20.15.patch /tmp/vaultly.patch
+RUN git -C /source apply --check /tmp/vaultly.patch \
+    && git -C /source apply /tmp/vaultly.patch
+
+COPY branding/vaultly-favicon.svg /source/src-ui/src/vaultly-favicon.svg
+
+FROM docker.io/node:20-trixie-slim AS frontend
+
+COPY --from=source /source/src-ui /src/src-ui
+COPY --from=source /source/src /src/src
+
+WORKDIR /src/src-ui
+RUN corepack enable \
+    && corepack prepare pnpm@10.17.1 --activate \
+    && pnpm install --frozen-lockfile \
+    && ./node_modules/.bin/ng build --configuration production
+
+# Retain the complete official runtime and replace only its browser frontend.
+FROM ghcr.io/paperless-ngx/paperless-ngx:2.20.15
+
+COPY --from=frontend --chown=paperless:paperless \
+  /src/src/documents/static/frontend/ \
+  /usr/src/paperless/src/documents/static/frontend/
+
+RUN cd /usr/src/paperless/src \
+    && s6-setuidgid paperless python3 manage.py collectstatic --clear --no-input --link
+
