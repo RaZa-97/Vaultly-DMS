@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled and runs `vaultly-paperless:2.20.15-frontend3`. Local revision `frontend4` removes the global documentation entries and shared page-header help links and changes both application and login primary colors to Vaultly indigo `#4338CA`.
+- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend4` in approximately 148 seconds. It removes the global documentation entries and shared page-header help links and changes both application and login primary colors to Vaultly indigo `#4338CA`.
 - **Pushed:** `origin/main` includes the `frontend4` documentation/theme implementation through commit `22288e6`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses `vaultly-paperless:2.20.15-frontend3`, reports healthy, and serves port `8000`. Persistent services and volumes remained intact.
-- **Next:** Pull, build, and deploy `frontend4` on the VM, then verify the documentation links, indigo theme, configuration lock, and retained OCR content.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. PostgreSQL, Redis, Tika, and Gotenberg remain running; the webserver is intentionally stopped after the successful `frontend4` build. Persistent services and volumes remain intact.
+- **Next:** Start the webserver from `frontend4`, confirm container health, then verify the documentation links, indigo theme, configuration lock, and retained OCR content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend4 image built on VM
+
+- Fast-forwarded the VM checkout through publication commit `78816d1`.
+- Gracefully stopped only the webserver and successfully built `vaultly-paperless:2.20.15-frontend4` in approximately 148 seconds.
+- PostgreSQL, Redis, Tika, Gotenberg, and all persistent volumes were left intact.
+- Reason: compile the documentation-link removal and Vaultly indigo theme before replacing the running webserver.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend4 published
 
