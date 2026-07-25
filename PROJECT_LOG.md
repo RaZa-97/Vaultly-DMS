@@ -3,11 +3,16 @@
 ## Current State
 
 - **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend6` in approximately 151 seconds. Local revision `frontend7` expands the built-in guide into a detailed 22-section manual with examples and a downloadable PDF.
-- **Pushed:** `origin/main` includes the `frontend6` build record through commit `f2b2269`. The detailed HTML/PDF guide is validated locally but not yet committed or pushed. No VM secret or local credential file is stored in Git.
+- **Pushed:** `origin/main` includes the validated detailed HTML/PDF guide and `frontend7` image revision through commit `fef18b6`. No VM secret or local credential file is stored in Git.
 - **VM:** `Ubuntu-Vaultly` is persistent and stable. PostgreSQL, Redis, Tika, and Gotenberg remain running; the webserver is intentionally stopped after the successful `frontend6` build. Persistent services and volumes remain intact.
-- **Next:** Commit and push `frontend7`, then build, deploy, and verify the detailed HTML/PDF guide on the VM.
+- **Next:** Pull and build `frontend7` on the VM, then deploy and verify the detailed HTML/PDF guide.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: detailed guide and frontend7 published
+
+- Committed and pushed the detailed built-in manual, downloadable PDF, and `frontend7` image revision as `fef18b6`.
+- Reason: make the validated documentation release available for the user's VM build and verification.
 
 ### 2026-07-25 — Phase 1, Step 7: detailed Vaultly manual and PDF prepared
 
