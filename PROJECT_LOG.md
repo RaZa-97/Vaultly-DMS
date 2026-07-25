@@ -2,12 +2,19 @@
 
 ## Current State
 
-- **Built:** The VM successfully compiled and runs healthy `vaultly-paperless:2.20.15-frontend5`. Local revision `frontend6` additionally changes the Django administration header, browser title, and dashboard heading to Vaultly.
+- **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend6` in approximately 151 seconds. It changes the Django administration header, browser title, and dashboard heading to Vaultly.
 - **Pushed:** `origin/main` includes the validated `frontend6` Django Admin branding through commit `0795e31`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` uses `vaultly-paperless:2.20.15-frontend5`, reports healthy, and serves port `8000`. Persistent services and volumes remain intact.
-- **Next:** Pull and build `frontend6` on the VM, then deploy and verify the Vaultly-branded Django administration interface.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. PostgreSQL, Redis, Tika, and Gotenberg remain running; the webserver is intentionally stopped after the successful `frontend6` build. Persistent services and volumes remain intact.
+- **Next:** Start the webserver from `frontend6`, confirm health, then verify the Vaultly-branded Django administration interface.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend6 image built on VM
+
+- Fast-forwarded the VM checkout through publication commit `03bccc5`.
+- Gracefully stopped only the webserver and successfully built `vaultly-paperless:2.20.15-frontend6` in approximately 151 seconds.
+- PostgreSQL, Redis, Tika, Gotenberg, and all persistent volumes remained intact.
+- Reason: compile the Vaultly Django administration labels before replacing the running webserver.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend6 published
 
