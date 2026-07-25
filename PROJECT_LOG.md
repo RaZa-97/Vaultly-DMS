@@ -3,11 +3,19 @@
 ## Current State
 
 - **Built:** The VM successfully compiled custom image `vaultly-paperless:2.20.15-frontend1` from the exact pinned Paperless-ngx source and Vaultly patch. The earlier official runtime already passed upload, preview, OCR, indexing, and search smoke tests.
-- **Pushed:** `origin/main` includes the custom frontend implementation and publication record through commit `df55156`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. The custom image build completed in 143 seconds after temporary desktop unresponsiveness caused by compilation pressure on the 4 GB VM. The existing five services remain running on the previous webserver container.
-- **Next:** Recreate only the webserver from the newly built custom image, verify container health, then inspect the header, login page, browser favicon, document data, and OCR search result.
+- **Pushed:** `origin/main` includes the custom frontend implementation and successful-build record through commit `d074a59`. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses custom image `vaultly-paperless:2.20.15-frontend1`, reports healthy, and listens on port `8000`. Final Django checks and background tasks passed.
+- **Next:** Inspect the custom header, login page, and browser favicon; confirm the existing document and OCR search result survived the webserver replacement.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: custom webserver healthy
+
+- Recreated only `vaultly-webserver-1` from custom image `vaultly-paperless:2.20.15-frontend1`; PostgreSQL, Redis, Tika, Gotenberg, and persistent volumes remained in place.
+- Confirmed all five services are Up and the custom webserver reports healthy.
+- Confirmed no migrations were required, the final Django system check passed, Granian is listening on port `8000`, Redis connected, and scheduled background tasks completed.
+- An interim missing `chi_sim` OCR message occurred while its package was still installing; installation completed and the subsequent final system check reported zero issues.
+- Reason: verify runtime health before browser, branding, and retained-data checks.
 
 ### 2026-07-25 — Phase 1, Step 7: custom frontend image built on VM
 
