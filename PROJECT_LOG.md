@@ -3,11 +3,17 @@
 ## Current State
 
 - **Built:** The VM successfully compiled `vaultly-paperless:2.20.15-frontend3` in 141 seconds. It retains complete Vaultly branding and hides the Application Logo/Application Title controls and empty General Settings tab while preserving OCR and Barcode configuration.
-- **Pushed:** `origin/main` includes the `frontend3` implementation and publication record through commit `4494806`. No VM secret or local credential file is stored in Git.
-- **VM:** `Ubuntu-Vaultly` is persistent and stable. The prior `frontend2` webserver is intentionally stopped after a graceful shutdown for the build; PostgreSQL, Redis, Tika, Gotenberg, and persistent volumes remain intact.
-- **Next:** Recreate only the webserver from `frontend3`, confirm health, then verify the Configuration screen and retained OCR document content.
+- **Pushed:** `origin/main` includes the `frontend3` implementation and successful-build record through commit `c445bca`. No VM secret or local credential file is stored in Git.
+- **VM:** `Ubuntu-Vaultly` is persistent and stable. All five services are running; `vaultly-webserver-1` now uses `vaultly-paperless:2.20.15-frontend3`, reports healthy, and serves port `8000`. Persistent services and volumes remained intact.
+- **Next:** Verify the Configuration screen omits General Settings and both branding controls while retaining OCR and Barcode settings, then recheck the OCR document content.
 
 ## History
+
+### 2026-07-25 — Phase 1, Step 7: frontend3 webserver healthy
+
+- Recreated only `vaultly-webserver-1` from `vaultly-paperless:2.20.15-frontend3`.
+- Confirmed the custom webserver reports healthy and publishes port `8000`; PostgreSQL, Redis, Tika, and Gotenberg remained running.
+- Reason: verify the branding-locked runtime before browser and retained-content checks.
 
 ### 2026-07-25 — Phase 1, Step 7: frontend3 image built on VM
 
