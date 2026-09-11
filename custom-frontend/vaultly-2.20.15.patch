@@ -81,7 +81,7 @@ diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-
 index 673eaf0..7ea1947 100644
 --- a/src-ui/src/app/components/app-frame/app-frame.component.html
 +++ b/src-ui/src/app/components/app-frame/app-frame.component.html
-@@ -8,19 +8,13 @@
+@@ -8,19 +8,21 @@
      [ngClass]="{ 'slim': slimSidebarEnabled, 'col-auto col-md-3 col-lg-2 col-xxxl-1' : !slimSidebarEnabled, 'py-3' : !customAppTitle?.length || slimSidebarEnabled, 'py-2': customAppTitle?.length }"
      routerLink="/dashboard"
      tourAnchor="tour.intro">
@@ -90,12 +90,19 @@ index 673eaf0..7ea1947 100644
 -        d="M194.7,0C164.22,70.94,17.64,79.74,64.55,194.06c.58,1.47-10.85,17-18.47,29.9-1.76-6.45-3.81-13.48-3.52-14.07,38.11-45.14-27.26-70.65-30.78-107.58C-4.64,131.62-10.5,182.92,39,212.53c.3,0,2.64,11.14,3.81,16.71a58.55,58.55,0,0,0-2.93,6.45c-1.17,2.93,7.62,2.64,7.62,3.22.88-.29,21.7-36.93,22.28-37.23C187.67,174.72,208.48,68.6,194.7,0ZM134.61,74.75C79.5,124,70.12,160.64,71.88,178.53,53.41,134.85,107.64,86.77,134.61,74.75ZM28.2,145.11c10.55,9.67,28.14,39.28,13.19,56.57C44.91,193.77,46.08,175.89,28.2,145.11Z"
 -        transform="translate(0 0)" />
 -    </svg>
--    <div class="ms-2 ms-md-3 d-inline-block" [class.d-md-none]="slimSidebarEnabled">
-+    <div class="d-inline-block" [class.d-md-none]="slimSidebarEnabled">
++    <!-- Vaultly vault-dial mark. The ring takes currentColor so it stays legible
++         against whichever sidebar theme is active; the V keeps the brand teal,
++         which reads on both light and dark. -->
++    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="1.5em" height="1.5em" aria-hidden="true">
++      <circle cx="32" cy="32" r="25.2" fill="none" stroke="currentColor" stroke-width="5.8" stroke-dasharray="35.584 4" stroke-dashoffset="37.584"/>
++      <path d="M18 21.8L32 44.6L46 21.8L39.1 21.8L32 33.36L24.9 21.8Z" fill="#14B8A6"/>
++    </svg>
+     <div class="ms-2 ms-md-3 d-inline-block" [class.d-md-none]="slimSidebarEnabled">
        @if (customAppTitle?.length) {
          <div class="d-flex flex-column align-items-start custom-title">
            <span class="title">{{customAppTitle}}</span>
 -          <span class="byline text-uppercase font-monospace" i18n>by Paperless-ngx</span>
++          <span class="byline text-uppercase font-monospace" i18n>by PBSS</span>
          </div>
        } @else {
 -        Paperless-ngx
@@ -298,8 +305,8 @@ index 61e5fe4..4c94f64 100644
 -  // base color e.g. #17541f = hsl(128, 57%, 21%)
 -  --pngx-primary: 128, 57%;
 -  --pngx-primary-lightness: 21%;
-+  // Vaultly brand indigo #4338CA = hsl(245, 65%, 51%)
-+  --pngx-primary: 245, 65%;
++  // Vaultly brand indigo #4338CA = hsl(245, 58%, 51%)
++  --pngx-primary: 245, 58%;
 +  --pngx-primary-lightness: 51%;
  }
  
@@ -369,12 +376,17 @@ index 2bb3758..d2740fe 100644
  </head>
  <body>
  	<pngx-root>
-@@ -59,7 +58,7 @@
+@@ -59,7 +58,10 @@
  			<div class="app-loader align-self-center text-center mx-auto">
- 				{% include "paperless-ngx/snippets/svg_logo.html" with extra_attrs="class='logo mb-2' height='6em'" %}
- 				<h6 class="m-auto">{% translate "Paperless-ngx is loading..." %}</h6>
+-				{% include "paperless-ngx/snippets/svg_logo.html" with extra_attrs="class='logo mb-2' height='6em'" %}
+-				<h6 class="m-auto">{% translate "Paperless-ngx is loading..." %}</h6>
 -				<p class="warning m-auto mt-3 small fade hide">{% translate "Still here?! Hmm, something might be wrong." %} <a href="https://docs.paperless-ngx.com">{% translate "Here's a link to the docs." %}</a></p>
-+			<p class="warning m-auto mt-3 small fade hide">{% translate "Still here? Something may need attention." %} <a href="{% static 'vaultly-docs/index.html' %}#troubleshooting">{% translate "Open the Vaultly troubleshooting guide." %}</a></p>
++				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="logo mb-2" height="6em" width="6em" aria-hidden="true">
++					<circle cx="32" cy="32" r="25.2" fill="none" stroke="#4338CA" stroke-width="5.8" stroke-dasharray="35.584 4" stroke-dashoffset="37.584"/>
++					<path d="M18 21.8L32 44.6L46 21.8L39.1 21.8L32 33.36L24.9 21.8Z" fill="#14B8A6"/>
++				</svg>
++				<h6 class="m-auto">{% translate "Vaultly is loading..." %}</h6>
++				<p class="warning m-auto mt-3 small fade hide">{% translate "Still here? Something may need attention." %} <a href="{% static 'vaultly-docs/index.html' %}#troubleshooting">{% translate "Open the Vaultly troubleshooting guide." %}</a></p>
  			</div>
  		</div>
  		<script type="text/javascript">{# Pass Django messages to Angular frontend #}
@@ -423,10 +435,10 @@ diff --git a/src/paperless/urls.py b/src/paperless/urls.py
 @@ -379,6 +379,6 @@
  # Text in each page's <h1> (and above login form).
 -admin.site.site_header = "Paperless-ngx"
-+admin.site.site_header = "Vaultly"
++admin.site.site_header = "Vaultly by PBSS"
  # Text at the end of each page's <title>.
 -admin.site.site_title = "Paperless-ngx"
 +admin.site.site_title = "Vaultly Admin"
  # Text at the top of the admin index page.
 -admin.site.index_title = _("Paperless-ngx administration")
-+admin.site.index_title = _("Vaultly administration")
++admin.site.index_title = _("Vaultly by PBSS administration")

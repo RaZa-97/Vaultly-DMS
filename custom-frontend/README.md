@@ -28,6 +28,20 @@ Revision `frontend7` expands the bundled Vaultly documentation into a detailed
 22-section user and administrator manual and includes a matching downloadable
 PDF generated from the same source.
 
+Revision `frontend8` applies the *Vaultly by PBSS* identity. The sidebar brand
+regains a mark — the Vaultly vault dial, drawn with the ring in `currentColor`
+so it stays legible against either sidebar theme while the V keeps the brand
+teal — and reuses the upstream byline slot for `by PBSS`. The application
+loading screen, which had still shown the Paperless-ngx leaf and "Paperless-ngx
+is loading...", now shows the Vaultly mark and wording. The Django
+administration header and index title carry the full `Vaultly by PBSS` name;
+the browser title stays `Vaultly Admin`, where the shorter form fits better.
+
+`frontend8` also corrects the Angular primary colour. It had been set to
+`hsl(245, 65%, 51%)`, which is `#3E31D3` — close to, but not, the brand indigo.
+It is now `hsl(245, 58%, 51%)`, which resolves to `#4338CA`, so the interface
+and the logo use the same colour.
+
 ## Upgrade rule
 
 Never change only the runtime image tag. For each Paperless-ngx upgrade:

@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.vaultly
-    image: vaultly-paperless:2.20.15-frontend7
+    image: vaultly-paperless:2.20.15-frontend8
     restart: unless-stopped
     depends_on:
       - db
@@ -35,6 +35,10 @@ services:
     volumes:
       - data:/usr/src/paperless/data
       - media:/usr/src/paperless/media
+      # PAPERLESS_APP_LOGO selects which of these the login page shows.
+      # The full lockup carries the "BY PBSS" byline and the partner badge;
+      # vaultly-logo.svg is the Vaultly-only fallback.
+      - ./branding/vaultly-lockup-full.svg:/usr/src/paperless/static/vaultly-lockup-full.svg:ro
       - ./branding/vaultly-logo.svg:/usr/src/paperless/static/vaultly-logo.svg:ro
       - ./branding/vaultly-favicon.svg:/usr/src/paperless/static/vaultly-favicon.svg:ro
       - ./export:/usr/src/paperless/export

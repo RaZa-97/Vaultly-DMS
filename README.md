@@ -1,6 +1,8 @@
-# Vaultly
+# Vaultly by PBSS
 
-Vaultly is a self-hosted document management system for small businesses, based on [Paperless-ngx](https://docs.paperless-ngx.com/).
+Vaultly is a self-hosted document management system for small businesses, based on [Paperless-ngx](https://docs.paperless-ngx.com/), delivered in partnership with PBSS.
+
+Surfaces with room carry the full name, **Vaultly by PBSS**. Where space is tight — the browser tab, the sidebar brand slot, `PAPERLESS_APP_TITLE` — the product is **Vaultly** alone. See [`branding/README.md`](branding/README.md) for the asset set and the rules for placing the PBSS badge.
 
 ## Project status
 
