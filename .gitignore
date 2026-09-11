@@ -30,3 +30,6 @@ Desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Generated brand asset tooling cache (Inter font, re-downloaded on demand)
+branding/.cache/
