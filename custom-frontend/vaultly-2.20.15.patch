@@ -22,6 +22,68 @@ index b55e441..dbb8979 100644
                "src/assets",
                "src/manifest.webmanifest"
              ],
+diff --git a/src-ui/src/app/app.component.ts b/src-ui/src/app/app.component.ts
+index b782e62..d1759c7 100644
+--- a/src-ui/src/app/app.component.ts
++++ b/src-ui/src/app/app.component.ts
+@@ -92,7 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
+             )
+           ) {
+             this.toastService.show({
+-              content: $localize`Document ${status.filename} was added to Paperless-ngx.`,
++              content: $localize`Document ${status.filename} was added to Vaultly.`,
+               delay: 10000,
+               actionName: $localize`Open document`,
+               action: () => {
+@@ -101,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
+             })
+           } else {
+             this.toastService.show({
+-              content: $localize`Document ${status.filename} was added to Paperless-ngx.`,
++              content: $localize`Document ${status.filename} was added to Vaultly.`,
+               delay: 10000,
+             })
+           }
+@@ -131,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
+           )
+         ) {
+           this.toastService.show({
+-            content: $localize`Document ${status.filename} is being processed by Paperless-ngx.`,
++            content: $localize`Document ${status.filename} is being processed by Vaultly.`,
+             delay: 5000,
+           })
+         }
+@@ -182,7 +182,7 @@ export class AppComponent implements OnInit, OnDestroy {
+         },
+         {
+           anchorId: 'tour.upload-widget',
+-          content: $localize`Drag-and-drop documents here to start uploading or place them in the consume folder. You can also drag-and-drop documents anywhere on all other pages of the web app. Once you do, Paperless-ngx will start training its machine learning algorithms.`,
++          content: $localize`Drag-and-drop documents here to start uploading or place them in the consume folder. You can also drag-and-drop documents anywhere on all other pages of the web app. Once you do, Vaultly will start training its machine learning algorithms.`,
+           route: '/dashboard',
+         },
+         {
+@@ -249,7 +249,7 @@ export class AppComponent implements OnInit, OnDestroy {
+           content:
+             $localize`There are <em>tons</em> more features and info we didn't cover here, but this should get you started. Check out the documentation or visit the project on GitHub to learn more or to report issues.` +
+             '<br/><br/>' +
+-            $localize`Lastly, on behalf of every contributor to this community-supported project, thank you for using Paperless-ngx!`,
++            $localize`Lastly, thank you for using Vaultly!`,
+           route: '/dashboard',
+           isOptional: false,
+           backdropConfig: {
+diff --git a/src-ui/src/app/components/admin/config/config.component.html b/src-ui/src/app/components/admin/config/config.component.html
+index c103af1..2bbfb87 100644
+--- a/src-ui/src/app/components/admin/config/config.component.html
++++ b/src-ui/src/app/components/admin/config/config.component.html
+@@ -1,7 +1,7 @@
+ <pngx-page-header
+     title="Application Configuration"
+     i18n-title
+-    info="Global app configuration options which apply to <strong>every</strong> user of this install of Paperless-ngx. Options can also be set using environment variables or the configuration file but the value here will always take precedence."
++    info="Global app configuration options which apply to <strong>every</strong> user of this install of Vaultly. Options can also be set using environment variables or the configuration file but the value here will always take precedence."
+     i18n-info
+     infoLink="configuration">
+ </pngx-page-header>
 diff --git a/src-ui/src/app/components/admin/config/config.component.ts b/src-ui/src/app/components/admin/config/config.component.ts
 index 44e482e..66e1fe2 100644
 --- a/src-ui/src/app/components/admin/config/config.component.ts
@@ -64,7 +126,7 @@ index 44e482e..66e1fe2 100644
  
    public saveConfig() {
 diff --git a/src-ui/src/app/components/admin/settings/settings.component.html b/src-ui/src/app/components/admin/settings/settings.component.html
-index b228dac..1f4c885 100644
+index b228dac..f6e5f78 100644
 --- a/src-ui/src/app/components/admin/settings/settings.component.html
 +++ b/src-ui/src/app/components/admin/settings/settings.component.html
 @@ -4,9 +4,6 @@
@@ -77,8 +139,17 @@ index b228dac..1f4c885 100644
    @if (permissionsService.isAdmin()) {
      <button class="btn btn-sm btn-outline-primary position-relative ms-md-5 me-1" (click)="showSystemStatus()"
        [disabled]="!systemStatus">
+@@ -199,7 +196,7 @@
+                   <option [ngValue]="ZoomSetting.PageWidth" i18n>Fit width</option>
+                   <option [ngValue]="ZoomSetting.PageFit" i18n>Fit page</option>
+                 </select>
+-                <p class="small text-muted mt-1" i18n>Only applies to the Paperless-ngx PDF viewer.</p>
++                <p class="small text-muted mt-1" i18n>Only applies to the Vaultly PDF viewer.</p>
+               </div>
+             </div>
+ 
 diff --git a/src-ui/src/app/components/app-frame/app-frame.component.html b/src-ui/src/app/components/app-frame/app-frame.component.html
-index 673eaf0..7ea1947 100644
+index 673eaf0..1121553 100644
 --- a/src-ui/src/app/components/app-frame/app-frame.component.html
 +++ b/src-ui/src/app/components/app-frame/app-frame.component.html
 @@ -8,19 +8,21 @@
@@ -89,14 +160,13 @@ index 673eaf0..7ea1947 100644
 -      <path
 -        d="M194.7,0C164.22,70.94,17.64,79.74,64.55,194.06c.58,1.47-10.85,17-18.47,29.9-1.76-6.45-3.81-13.48-3.52-14.07,38.11-45.14-27.26-70.65-30.78-107.58C-4.64,131.62-10.5,182.92,39,212.53c.3,0,2.64,11.14,3.81,16.71a58.55,58.55,0,0,0-2.93,6.45c-1.17,2.93,7.62,2.64,7.62,3.22.88-.29,21.7-36.93,22.28-37.23C187.67,174.72,208.48,68.6,194.7,0ZM134.61,74.75C79.5,124,70.12,160.64,71.88,178.53,53.41,134.85,107.64,86.77,134.61,74.75ZM28.2,145.11c10.55,9.67,28.14,39.28,13.19,56.57C44.91,193.77,46.08,175.89,28.2,145.11Z"
 -        transform="translate(0 0)" />
--    </svg>
 +    <!-- Vaultly vault-dial mark. The ring takes currentColor so it stays legible
 +         against whichever sidebar theme is active; the V keeps the brand teal,
 +         which reads on both light and dark. -->
 +    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="1.5em" height="1.5em" aria-hidden="true">
 +      <circle cx="32" cy="32" r="25.2" fill="none" stroke="currentColor" stroke-width="5.8" stroke-dasharray="35.584 4" stroke-dashoffset="37.584"/>
 +      <path d="M18 21.8L32 44.6L46 21.8L39.1 21.8L32 33.36L24.9 21.8Z" fill="#14B8A6"/>
-+    </svg>
+     </svg>
      <div class="ms-2 ms-md-3 d-inline-block" [class.d-md-none]="slimSidebarEnabled">
        @if (customAppTitle?.length) {
          <div class="d-flex flex-column align-items-start custom-title">
@@ -110,7 +180,7 @@ index 673eaf0..7ea1947 100644
        }
      </div>
    </a>
-@@ -54,8 +48,7 @@
+@@ -54,8 +56,7 @@
            <i-bs class="me-2" name="door-open"></i-bs><ng-container i18n>Logout</ng-container>
          </a>
          <div class="dropdown-divider"></div>
@@ -120,7 +190,7 @@ index 673eaf0..7ea1947 100644
            <i-bs class="me-2" name="question-circle"></i-bs><ng-container i18n>Documentation</ng-container>
          </a>
        </div>
-@@ -294,15 +287,13 @@
+@@ -294,15 +295,13 @@
                  </a>
                </li>
              }
@@ -139,6 +209,19 @@ index 673eaf0..7ea1947 100644
                <div class="px-3 py-0 text-muted small d-flex align-items-center flex-wrap">
                  <div class="me-3">
                    <a class="text-muted text-decoration-none" target="_blank" rel="noopener noreferrer"
+diff --git a/src-ui/src/app/components/common/edit-dialog/mail-rule-edit-dialog/mail-rule-edit-dialog.component.html b/src-ui/src/app/components/common/edit-dialog/mail-rule-edit-dialog/mail-rule-edit-dialog.component.html
+index afe6c2a..ae0bf83 100644
+--- a/src-ui/src/app/components/common/edit-dialog/mail-rule-edit-dialog/mail-rule-edit-dialog.component.html
++++ b/src-ui/src/app/components/common/edit-dialog/mail-rule-edit-dialog/mail-rule-edit-dialog.component.html
+@@ -24,7 +24,7 @@
+     </div>
+     <hr class="mt-0"/>
+     <div class="row">
+-      <p class="small" i18n>Paperless will only process mails that match <em>all</em> of the criteria specified below.</p>
++      <p class="small" i18n>Vaultly will only process mails that match <em>all</em> of the criteria specified below.</p>
+       <div class="col-md-6">
+         <pngx-input-text [horizontal]="true" i18n-title title="Folder" formControlName="folder" i18n-hint hint="Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server." [error]="error?.folder"></pngx-input-text>
+         <pngx-input-number [horizontal]="true" i18n-title title="Maximum age (days)" formControlName="maximum_age" [showAdd]="false" [error]="error?.maximum_age"></pngx-input-number>
 diff --git a/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html b/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html
 index 625c737..845438d 100644
 --- a/src-ui/src/app/components/common/edit-dialog/storage-path-edit-dialog/storage-path-edit-dialog.component.html
@@ -201,6 +284,19 @@ index f176140..d6ce29b 100644
        <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
      </ng-template>
    </label>
+diff --git a/src-ui/src/app/components/common/system-status-dialog/system-status-dialog.component.html b/src-ui/src/app/components/common/system-status-dialog/system-status-dialog.component.html
+index 99fddbf..10e7953 100644
+--- a/src-ui/src/app/components/common/system-status-dialog/system-status-dialog.component.html
++++ b/src-ui/src/app/components/common/system-status-dialog/system-status-dialog.component.html
+@@ -19,7 +19,7 @@
+           </div>
+           <div class="card-body">
+             <dl class="card-text">
+-              <dt i18n>Paperless-ngx Version</dt>
++              <dt i18n>Vaultly Version</dt>
+               <dd>
+                 {{status.pngx_version}}
+                 @if (versionMismatch) {
 diff --git a/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html b/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html
 index 6353281..38d62b3 100644
 --- a/src-ui/src/app/components/dashboard/widgets/welcome-widget/welcome-widget.component.html
@@ -233,6 +329,19 @@ index 26b63fd..2251224 100644
      <i-bs class="ms-1" width=".8em" height=".8em" name="box-arrow-up-right"></i-bs>
    </ng-template>
    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+diff --git a/src-ui/src/app/components/manage/workflows/workflows.component.html b/src-ui/src/app/components/manage/workflows/workflows.component.html
+index 0fb63d0..209cfbf 100644
+--- a/src-ui/src/app/components/manage/workflows/workflows.component.html
++++ b/src-ui/src/app/components/manage/workflows/workflows.component.html
+@@ -1,7 +1,7 @@
+ <pngx-page-header
+   title="Workflows"
+   i18n-title
+-  info="Use workflows to customize the behavior of Paperless-ngx when events 'trigger' a workflow."
++  info="Use workflows to customize the behavior of Vaultly when events 'trigger' a workflow."
+   i18n-info
+   infoLink="usage/#workflows"
+   >
 diff --git a/src-ui/src/app/data/ui-settings.ts b/src-ui/src/app/data/ui-settings.ts
 index 6ace748..1f29ab3 100644
 --- a/src-ui/src/app/data/ui-settings.ts
@@ -246,6 +355,32 @@ index 6ace748..1f29ab3 100644
  
  export const SETTINGS_KEYS = {
    VERSION: 'version',
+diff --git a/src-ui/src/environments/environment.prod.ts b/src-ui/src/environments/environment.prod.ts
+index 7f0ab1c..bc9b4e6 100644
+--- a/src-ui/src/environments/environment.prod.ts
++++ b/src-ui/src/environments/environment.prod.ts
+@@ -4,7 +4,7 @@ export const environment = {
+   production: true,
+   apiBaseUrl: document.baseURI + 'api/',
+   apiVersion: '9', // match src/paperless/settings.py
+-  appTitle: 'Paperless-ngx',
++  appTitle: 'Vaultly',
+   tag: 'prod',
+   version: '2.20.15',
+   webSocketHost: window.location.host,
+diff --git a/src-ui/src/environments/environment.ts b/src-ui/src/environments/environment.ts
+index 1097404..d4e1757 100644
+--- a/src-ui/src/environments/environment.ts
++++ b/src-ui/src/environments/environment.ts
+@@ -6,7 +6,7 @@ export const environment = {
+   production: false,
+   apiBaseUrl: 'http://localhost:8000/api/',
+   apiVersion: '9',
+-  appTitle: 'Paperless-ngx',
++  appTitle: 'Vaultly',
+   tag: 'dev',
+   version: 'DEVELOPMENT',
+   webSocketHost: 'localhost:8000',
 diff --git a/src-ui/src/index.html b/src-ui/src/index.html
 index de85328..de135a1 100644
 --- a/src-ui/src/index.html
@@ -296,7 +431,7 @@ index 4a31324..e095cfd 100644
    "start_url": "/"
  }
 diff --git a/src-ui/src/theme.scss b/src-ui/src/theme.scss
-index 61e5fe4..4c94f64 100644
+index 61e5fe4..729f364 100644
 --- a/src-ui/src/theme.scss
 +++ b/src-ui/src/theme.scss
 @@ -1,8 +1,8 @@
@@ -320,6 +455,19 @@ index 61e5fe4..4c94f64 100644
    --bs-primary: hsl(var(--pngx-primary),var(--pngx-primary-lightness));
  }
  
+diff --git a/src/documents/serialisers.py b/src/documents/serialisers.py
+index 011045e..8ecf3fe 100644
+--- a/src/documents/serialisers.py
++++ b/src/documents/serialisers.py
+@@ -1869,7 +1869,7 @@ class PostDocumentSerializer(serializers.Serializer):
+     )
+ 
+     from_webui = serializers.BooleanField(
+-        label="Documents are from Paperless-ngx WebUI",
++        label="Documents are from the Vaultly web interface",
+         write_only=True,
+         required=False,
+     )
 diff --git a/src/documents/static/base.css b/src/documents/static/base.css
 index 90d8d7b..34052fc 100644
 --- a/src/documents/static/base.css
@@ -340,6 +488,33 @@ index 90d8d7b..34052fc 100644
  }
  
  .logo {
+diff --git a/src/documents/templates/account/account_inactive.html b/src/documents/templates/account/account_inactive.html
+index ab65974..53ac77c 100644
+--- a/src/documents/templates/account/account_inactive.html
++++ b/src/documents/templates/account/account_inactive.html
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx account inactive" %}
++    {% trans "Vaultly account inactive" %}
+ {% endblock head_title %}
+ 
+ {% block form_top_content %}
+diff --git a/src/documents/templates/account/email/base_message.txt b/src/documents/templates/account/email/base_message.txt
+index 033ba01..322cbd4 100644
+--- a/src/documents/templates/account/email/base_message.txt
++++ b/src/documents/templates/account/email/base_message.txt
+@@ -1,7 +1,7 @@
+-{% load i18n %}{% autoescape off %}{% blocktrans with site_name="Paperless-ngx" %}Hello from {{ site_name }}!{% endblocktrans %}
++{% load i18n %}{% autoescape off %}{% blocktrans with site_name="Vaultly" %}Hello from {{ site_name }}!{% endblocktrans %}
+ 
+ {% block content %}{% endblock content %}
+ 
+-{% blocktrans with site_name="Paperless-ngx" site_domain=settings.domain %}Thank you for using {{ site_name }}!
++{% blocktrans with site_name="Vaultly" site_domain=settings.domain %}Thank you for using {{ site_name }}!
+ {{ site_domain }}{% endblocktrans %}
+ {% endautoescape %}
 diff --git a/src/documents/templates/account/login.html b/src/documents/templates/account/login.html
 index 767c21d..2712f05 100644
 --- a/src/documents/templates/account/login.html
@@ -353,8 +528,73 @@ index 767c21d..2712f05 100644
  {% endblock head_title %}
  
  {% block form_top_content %}
+diff --git a/src/documents/templates/account/password_reset.html b/src/documents/templates/account/password_reset.html
+index 019babd..44cfbb4 100644
+--- a/src/documents/templates/account/password_reset.html
++++ b/src/documents/templates/account/password_reset.html
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx reset password request" %}
++    {% trans "Vaultly reset password request" %}
+ {% endblock head_title %}
+ 
+ {% block form_content %}
+diff --git a/src/documents/templates/account/password_reset_done.html b/src/documents/templates/account/password_reset_done.html
+index 25fed47..ab90f11 100644
+--- a/src/documents/templates/account/password_reset_done.html
++++ b/src/documents/templates/account/password_reset_done.html
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx reset password sent" %}
++    {% trans "Vaultly reset password sent" %}
+ {% endblock head_title %}
+ 
+ {% block form_top_content %}
+diff --git a/src/documents/templates/account/password_reset_from_key.html b/src/documents/templates/account/password_reset_from_key.html
+index a9b2c34..72ad0c1 100644
+--- a/src/documents/templates/account/password_reset_from_key.html
++++ b/src/documents/templates/account/password_reset_from_key.html
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx reset password confirmation" %}
++    {% trans "Vaultly reset password confirmation" %}
+ {% endblock head_title %}
+ 
+ {% block form_top_content %}
+diff --git a/src/documents/templates/account/password_reset_from_key_done.html b/src/documents/templates/account/password_reset_from_key_done.html
+index 420901a..c62df41 100644
+--- a/src/documents/templates/account/password_reset_from_key_done.html
++++ b/src/documents/templates/account/password_reset_from_key_done.html
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx reset password complete" %}
++    {% trans "Vaultly reset password complete" %}
+ {% endblock head_title %}
+ 
+ {% block form_top_content %}
+diff --git a/src/documents/templates/account/signup.html b/src/documents/templates/account/signup.html
+index 9ab79d3..5589692 100644
+--- a/src/documents/templates/account/signup.html
++++ b/src/documents/templates/account/signup.html
+@@ -2,7 +2,7 @@
+ {% load i18n allauth %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx sign up" %}
++    {% trans "Vaultly sign up" %}
+ {% endblock head_title %}
+ 
+ {% block form_top_content %}
 diff --git a/src/documents/templates/index.html b/src/documents/templates/index.html
-index 2bb3758..d2740fe 100644
+index 2bb3758..5579510 100644
 --- a/src/documents/templates/index.html
 +++ b/src/documents/templates/index.html
 @@ -5,16 +5,15 @@
@@ -376,7 +616,9 @@ index 2bb3758..d2740fe 100644
  </head>
  <body>
  	<pngx-root>
-@@ -59,7 +58,10 @@
+@@ -57,9 +56,12 @@
+ 		</style>
+ 		<div class="bg-light w-100 h-100 d-flex align-items-center">
  			<div class="app-loader align-self-center text-center mx-auto">
 -				{% include "paperless-ngx/snippets/svg_logo.html" with extra_attrs="class='logo mb-2' height='6em'" %}
 -				<h6 class="m-auto">{% translate "Paperless-ngx is loading..." %}</h6>
@@ -390,6 +632,19 @@ index 2bb3758..d2740fe 100644
  			</div>
  		</div>
  		<script type="text/javascript">{# Pass Django messages to Angular frontend #}
+diff --git a/src/documents/templates/mfa/authenticate.html b/src/documents/templates/mfa/authenticate.html
+index cfc29da..eee09da 100644
+--- a/src/documents/templates/mfa/authenticate.html
++++ b/src/documents/templates/mfa/authenticate.html
+@@ -4,7 +4,7 @@
+ {% load allauth static %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx Two-Factor Authentication" %}
++    {% trans "Vaultly Two-Factor Authentication" %}
+ {% endblock head_title %}
+ 
+ {% block form_top_content %}
 diff --git a/src/documents/templates/paperless-ngx/base.html b/src/documents/templates/paperless-ngx/base.html
 index 4b9a911..c359f3c 100644
 --- a/src/documents/templates/paperless-ngx/base.html
@@ -414,6 +669,119 @@ index 4b9a911..c359f3c 100644
                          </h1>
                      {% endif %}
                  {% endif %}
+diff --git a/src/documents/templates/socialaccount/authentication_error.html b/src/documents/templates/socialaccount/authentication_error.html
+index 6450a16..f61e85d 100644
+--- a/src/documents/templates/socialaccount/authentication_error.html
++++ b/src/documents/templates/socialaccount/authentication_error.html
+@@ -2,7 +2,7 @@
+ {% load i18n allauth %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx social account sign in" %}
++    {% trans "Vaultly social account sign in" %}
+ {% endblock head_title %}
+ 
+ {% block form_content %}
+diff --git a/src/documents/templates/socialaccount/login.html b/src/documents/templates/socialaccount/login.html
+index 70c71ce..b620608 100644
+--- a/src/documents/templates/socialaccount/login.html
++++ b/src/documents/templates/socialaccount/login.html
+@@ -2,7 +2,7 @@
+ {% load i18n allauth %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx social account sign in" %}
++    {% trans "Vaultly social account sign in" %}
+ {% endblock head_title %}
+ 
+ {% block form_content %}
+diff --git a/src/documents/templates/socialaccount/signup.html b/src/documents/templates/socialaccount/signup.html
+index 01f70a5..c8394eb 100644
+--- a/src/documents/templates/socialaccount/signup.html
++++ b/src/documents/templates/socialaccount/signup.html
+@@ -2,7 +2,7 @@
+ {% load i18n %}
+ 
+ {% block head_title %}
+-    {% trans "Paperless-ngx social account sign up" %}
++    {% trans "Vaultly social account sign up" %}
+ {% endblock head_title %}
+ 
+ {% block form_content %}
+diff --git a/src/documents/views.py b/src/documents/views.py
+index d08543a..481f05b 100644
+--- a/src/documents/views.py
++++ b/src/documents/views.py
+@@ -2557,7 +2557,7 @@ class UiSettingsView(GenericAPIView):
+ 
+ @extend_schema_view(
+     get=extend_schema(
+-        description="Get the current version of the Paperless-NGX server",
++        description="Get the current version of the Vaultly server",
+         responses={
+             (200, "application/json"): OpenApiTypes.OBJECT,
+         },
+@@ -2958,7 +2958,7 @@ class CustomFieldViewSet(PermissionsAwareDocumentCountMixin, ModelViewSet):
+ 
+ @extend_schema_view(
+     get=extend_schema(
+-        description="Get the current system status of the Paperless-NGX server",
++        description="Get the current system status of the Vaultly server",
+         responses={
+             (200, "application/json"): inline_serializer(
+                 name="SystemStatus",
+diff --git a/src/paperless/settings.py b/src/paperless/settings.py
+index 97d0ca0..23cc45d 100644
+--- a/src/paperless/settings.py
++++ b/src/paperless/settings.py
+@@ -401,8 +401,8 @@ FORCE_SCRIPT_NAME, BASE_URL, LOGIN_URL, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
+ 
+ # DRF Spectacular settings
+ SPECTACULAR_SETTINGS = {
+-    "TITLE": "Paperless-ngx REST API",
+-    "DESCRIPTION": "OpenAPI Spec for Paperless-ngx",
++    "TITLE": "Vaultly REST API",
++    "DESCRIPTION": "OpenAPI Spec for Vaultly",
+     "VERSION": "6.0.0",
+     "SERVE_INCLUDE_SCHEMA": False,
+     "SWAGGER_UI_DIST": "SIDECAR",
+@@ -480,7 +480,7 @@ EMAIL_HOST_PASSWORD: Final[str] = os.getenv("PAPERLESS_EMAIL_HOST_PASSWORD", "")
+ DEFAULT_FROM_EMAIL: Final[str] = os.getenv("PAPERLESS_EMAIL_FROM", EMAIL_HOST_USER)
+ EMAIL_USE_TLS: Final[bool] = __get_boolean("PAPERLESS_EMAIL_USE_TLS")
+ EMAIL_USE_SSL: Final[bool] = __get_boolean("PAPERLESS_EMAIL_USE_SSL")
+-EMAIL_SUBJECT_PREFIX: Final[str] = "[Paperless-ngx] "
++EMAIL_SUBJECT_PREFIX: Final[str] = "[Vaultly] "
+ EMAIL_TIMEOUT = 30.0
+ EMAIL_ENABLED = EMAIL_HOST != "localhost" or EMAIL_HOST_USER != ""
+ if DEBUG:  # pragma: no cover
+@@ -519,9 +519,9 @@ SOCIALACCOUNT_PROVIDERS = json.loads(
+ SOCIAL_ACCOUNT_DEFAULT_GROUPS = __get_list("PAPERLESS_SOCIAL_ACCOUNT_DEFAULT_GROUPS")
+ SOCIAL_ACCOUNT_SYNC_GROUPS = __get_boolean("PAPERLESS_SOCIAL_ACCOUNT_SYNC_GROUPS")
+ 
+-MFA_TOTP_ISSUER = "Paperless-ngx"
++MFA_TOTP_ISSUER = "Vaultly"
+ 
+-ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Paperless-ngx] "
++ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Vaultly] "
+ 
+ DISABLE_REGULAR_LOGIN = __get_boolean("PAPERLESS_DISABLE_REGULAR_LOGIN")
+ REDIRECT_LOGIN_TO_SSO = __get_boolean("PAPERLESS_REDIRECT_LOGIN_TO_SSO")
+diff --git a/src/paperless/urls.py b/src/paperless/urls.py
+index e9635a0..87fca04 100644
+--- a/src/paperless/urls.py
++++ b/src/paperless/urls.py
+@@ -377,8 +377,8 @@ websocket_urlpatterns = [
+ ]
+ 
+ # Text in each page's <h1> (and above login form).
+-admin.site.site_header = "Paperless-ngx"
++admin.site.site_header = "Vaultly by PBSS"
+ # Text at the end of each page's <title>.
+-admin.site.site_title = "Paperless-ngx"
++admin.site.site_title = "Vaultly Admin"
+ # Text at the top of the admin index page.
+-admin.site.index_title = _("Paperless-ngx administration")
++admin.site.index_title = _("Vaultly by PBSS administration")
 diff --git a/src/paperless/views.py b/src/paperless/views.py
 index 1464a0e..6f34820 100644
 --- a/src/paperless/views.py
@@ -429,16 +797,3 @@ index 1464a0e..6f34820 100644
          except FileNotFoundError:
              return HttpResponseNotFound("favicon.ico not found")
  
-diff --git a/src/paperless/urls.py b/src/paperless/urls.py
---- a/src/paperless/urls.py
-+++ b/src/paperless/urls.py
-@@ -379,6 +379,6 @@
- # Text in each page's <h1> (and above login form).
--admin.site.site_header = "Paperless-ngx"
-+admin.site.site_header = "Vaultly by PBSS"
- # Text at the end of each page's <title>.
--admin.site.site_title = "Paperless-ngx"
-+admin.site.site_title = "Vaultly Admin"
- # Text at the top of the admin index page.
--admin.site.index_title = _("Paperless-ngx administration")
-+admin.site.index_title = _("Vaultly by PBSS administration")

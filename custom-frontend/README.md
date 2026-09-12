@@ -42,6 +42,43 @@ the browser title stays `Vaultly Admin`, where the shorter form fits better.
 It is now `hsl(245, 58%, 51%)`, which resolves to `#4338CA`, so the interface
 and the logo use the same colour.
 
+Revision `frontend9` removes the remaining user-facing `Paperless-ngx` product
+names. The trigger was the upload toast — "Document ... was added to
+Paperless-ngx." — but a sweep of the pinned source found 31 strings in total,
+including several that are not visible in the browser at all:
+
+- Upload and processing toasts, and the drag-and-drop hint.
+- The configuration, personal-settings, system-status, workflows and mail-rule
+  screens.
+- `environment.appTitle`, the fallback used before the server's `APP_TITLE`
+  setting loads.
+- Every account page title: sign up, the four password-reset stages, MFA,
+  social-account sign in and sign up, and account inactive.
+- The transactional email body, and `EMAIL_SUBJECT_PREFIX` /
+  `ACCOUNT_EMAIL_SUBJECT_PREFIX`, which set the subject line on messages the
+  server sends.
+- `MFA_TOTP_ISSUER`, which is the name shown beside the account in a user's
+  authenticator app. It is display-only in the `otpauth` URI, so existing
+  enrolments keep working.
+- The API schema title and the version and system-status endpoint descriptions.
+
+`frontend9` also fixes a packaging gap this exposed. Thirteen of the changed
+backend files were never copied into the runtime image, so those edits would
+have been applied to the source and then silently dropped at build time. The
+Dockerfile now copies the whole `src/documents/templates/` tree instead of
+three individual templates, plus `settings.py`, `serialisers.py` and
+`documents/views.py`.
+
+Deliberately left alone: `name="author"` meta tags, the GitHub and
+docs.paperless-ngx.com links, licence and copyright notices, internal
+identifiers such as `PaperlessTask` and `PaperlessConfig`, logger names, log
+lines, temp-file prefixes and template paths. Two strings in the update-check
+footer also keep the upstream name because the existing patch marks that block
+`d-none`, so it never renders.
+
+The patch is now generated mechanically with `git diff` against the pinned
+source rather than hand-maintained, and covers 41 files.
+
 ## Upgrade rule
 
 Never change only the runtime image tag. For each Paperless-ngx upgrade:

@@ -36,21 +36,30 @@ FROM ghcr.io/paperless-ngx/paperless-ngx:2.20.15
 COPY --from=frontend --chown=paperless:paperless \
   /src/src/documents/static/frontend/ \
   /usr/src/paperless/src/documents/static/frontend/
+# The whole template tree, not individual files: the Vaultly naming touches
+# the login, signup, password-reset, MFA, social-account and account-inactive
+# pages plus the transactional email body. Copying the directory keeps one
+# of them from being missed.
 COPY --from=source --chown=paperless:paperless \
-  /source/src/documents/templates/paperless-ngx/base.html \
-  /usr/src/paperless/src/documents/templates/paperless-ngx/base.html
-COPY --from=source --chown=paperless:paperless \
-  /source/src/documents/templates/account/login.html \
-  /usr/src/paperless/src/documents/templates/account/login.html
-COPY --from=source --chown=paperless:paperless \
-  /source/src/documents/templates/index.html \
-  /usr/src/paperless/src/documents/templates/index.html
+  /source/src/documents/templates/ \
+  /usr/src/paperless/src/documents/templates/
 COPY --from=source --chown=paperless:paperless \
   /source/src/paperless/views.py \
   /usr/src/paperless/src/paperless/views.py
 COPY --from=source --chown=paperless:paperless \
   /source/src/paperless/urls.py \
   /usr/src/paperless/src/paperless/urls.py
+# Backend product naming: the upload-source form label, and the API schema
+# title and endpoint descriptions.
+COPY --from=source --chown=paperless:paperless \
+  /source/src/paperless/settings.py \
+  /usr/src/paperless/src/paperless/settings.py
+COPY --from=source --chown=paperless:paperless \
+  /source/src/documents/serialisers.py \
+  /usr/src/paperless/src/documents/serialisers.py
+COPY --from=source --chown=paperless:paperless \
+  /source/src/documents/views.py \
+  /usr/src/paperless/src/documents/views.py
 COPY --from=source --chown=paperless:paperless \
   /source/src/paperless/static/paperless/img/vaultly-favicon.svg \
   /usr/src/paperless/src/paperless/static/paperless/img/vaultly-favicon.svg

@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.vaultly
-    image: vaultly-paperless:2.20.15-frontend8
+    image: vaultly-paperless:2.20.15-frontend9
     restart: unless-stopped
     depends_on:
       - db
